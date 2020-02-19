@@ -1,0 +1,337 @@
+.pictures {
+	background-size: 100%; /*設定圖片的大小*/
+	width: 49%;
+	display: inline-block;
+	transition: 0.4s; /*hover變化的時間*/
+	height: 300px;
+	background-position: top;
+	border-radius: 1%;
+}
+/*.pictures:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+
+		}
+		/*讓圖片移動到時有變大一點點的效果*/
+.pictures:hover {
+	background-size: 105%;
+}
+
+.dark {
+	opacity: 0.5;
+}
+
+.light {
+	opacity: 1;
+}
+
+.indexWidth {
+	width: 100%;
+}
+
+.fixed {
+	width: 100%;
+	opacity: 0.6;
+	background: black;
+	height: 10000px;
+	position: fixed;
+	z-index: 998;
+	display: none;
+	right: 0%
+}
+
+.loginOrOut {
+	width: 100px;
+	border-radius: 10px;
+	position: fixed;
+	top: 20px;
+	right: 50px;
+	background: gray;
+	z-index: 100;
+	padding: 10px;
+	text-align: center
+}
+
+.left-bar {
+	width: 5%;
+	display: inline-block;
+	height: 850px;
+	position: fixed;
+	font-size: 20px;
+	writing-mode: tb-rl;
+	font-weight: bold;
+	z-index: 9;
+	color: black;
+	transition: 0.4s;
+}
+
+.right-bar {
+	width: 5%;
+	display: inline-block;
+	writing-mode: tb-rl;
+	height: 850px;
+	right: 0px;
+	position: fixed;
+	z-index: 99;
+	color: black;
+	transition: 0.2s;
+}
+
+.right-bar:hover {
+	font-size: 28px;
+}
+
+.bottom-bar {
+	position: fixed;
+	width: 100%;
+	background: #EA0082;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	height: 50px;
+	bottom: 0px;
+	text-align: center;
+	font-family: 'ZCOOL XiaoWei', serif;
+	z-index: 10;
+}
+
+.bottom-bar-content {
+	margin-top: 5px;
+}
+
+.mainContent {
+	width: 100%;
+	display: inline-block;
+	position: relative;
+	text-align: center;
+}
+
+.mainContentimg {
+	width: 100%;
+	display: inline-block;
+	height: 800px;    
+	background-image: url(img/wall1.jpeg);
+}
+
+.mainContent-coverImg {
+	position: absolute;
+	width: 100%;
+	height: 800px;
+	z-index: 30;
+	background-image: url('../img/activity/bgimg.png');
+	background-size: 35%;
+	background-repeat: no-repeat;
+	background-position: center
+}
+
+.mainContent-img-left {
+	width: 550px;
+	display: inline-block;
+	height: 800px;
+	background-image: url('../img/activity/mymov1.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-bottom: 80px;
+	margin-top: -25px
+}
+
+.mainContent-img-right {
+	width: 550px;
+	display: inline-block;
+	height: 800px;
+	background-image: url('../img/activity/魏德聖黑白.jpg');
+	background-repeat: no-repeat;
+	background-position: 70%;
+	margin-left: -5px;
+	background-size: 200%
+}
+
+
+
+/*外層*/
+.funds-trailer {
+	position: relative;
+	width: 100%;
+	background-image: url(../img/activity/funds-bg.jpg);
+	background-repeat: no-repeat;
+	height: 800px;
+}
+
+.Ftrailer-video {
+	position: absolute;
+	padding-top: 150px;
+	padding-left: 23%;
+}
+
+.Ftrailer-title {
+	position: absolute;
+	color: white;
+	top: 120px;
+	font-size: 45px;
+	left: 70%;
+	font-family: 'ZCOOL XiaoWei', serif;
+}
+
+.Ftrailer-txt {
+	position: absolute;
+	color: white;
+	writing-mode: tb-rl;
+	height: 60%;
+	margin-top: 150px;
+	left: 18%;
+	font-weight: lighter;
+}
+/*外層*/
+.funds {
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+   
+.introduction {
+    background-size: 35%;
+	width: 100%;
+	text-align: left;         
+}
+
+.f-inner {
+	width: 30%;
+	display: inline-block;
+}
+
+.f-inner img {
+	width: 100%;
+	margin: -3px;
+}
+
+.f-content {
+	width: 60%;
+	display: inline-block;
+	text-align: left;
+	font-size: 20px;
+	vertical-align: top;
+}
+
+.f-content-pad {
+	padding: 50px;
+}
+
+.f-content h3 {
+	font-size: 40px;
+}
+
+.f-txt {
+	width: 5%;
+	display: inline-block;
+	font-size: 14px;
+	writing-mode: tb-rl;
+}
+   
+.story {
+	background-image: url(../img/wall1.jpeg);
+    background-size: 35%;
+	width: 100%;
+}
+
+.f-img-style {
+	width: 100%;
+	height: 200px;
+	background-repeat: no-repeat;
+	background-position: 50%;
+}
+
+.f-img1 {
+	background-image: url('../img/activity/test1.jpg');
+}
+
+.f-img2 {
+	background-image: url('../img/activity/test2.jpg');
+}
+
+.f-img3 {
+	background-image: url('../img/activity/test3.jpg');
+}
+
+.f-img4 {
+	background-image: url('../img/activity/test4.jpg');
+}
+
+.f-img5 {
+	background-image: url('../img/activity/test5.jpg');
+}
+
+.f-img6 {
+	background-image: url('../img/activity/test6.jpg');
+}
+
+/*外層*/
+.movie {
+	width: 100%;
+	background: black;
+	position: relative;
+}
+
+.cast {
+	width: 100%;
+	background: url(../img/activity/cast.jpg);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: center;
+}
+
+.area {
+	width: 100%;
+	text-align: center;
+	display: inline-block
+}
+
+.area:hover {
+	cursor: pointer;
+}
+
+.movie-title {
+	position: absolute;
+	font-size: 50px;
+	font-weight: bold;
+	color: white;
+	padding: 350px 0px 200px 200px;
+}
+
+.movie-inner {
+	font-size: 17px;
+	color: white;
+	padding: 280px 100px 200px 400px;
+}
+
+.movie-pad {
+	width: 90%;
+	display: inline-block;
+	padding-bottom: 60px;
+}
+
+
+
+.dots {
+	position: fixed;
+	height: 200px;
+	bottom: 30px;
+	right: 15px;
+}
+
+.dot {     
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	border-radius: 10px;
+	background: rgba(170, 170, 170, .35);
+	transition: 0.5s;
+}
+
+.dot:hover {
+	background: #EA0082;
+}
+
+.dot-pink {
+	background: #EA0082;
+}
+
