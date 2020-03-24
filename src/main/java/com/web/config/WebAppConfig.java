@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"com.web"})
+@ComponentScan({ "com.web" })
 public class WebAppConfig implements WebMvcConfigurer {
 	@Bean
 	public ViewResolver internalResourceViewResolver() {
@@ -26,28 +26,29 @@ public class WebAppConfig implements WebMvcConfigurer {
 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**").addResourceLocations("/WEB-INF/views/");
-//		registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/views/js/");
-//		registry.addResourceHandler("/image/**").addResourceLocations("/WEB-INF/views/image/");
+		// registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/views/js/");
+		// registry.addResourceHandler("/image/**").addResourceLocations("/WEB-INF/views/image/");
 	}
+
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
-	    CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-	    resolver.setDefaultEncoding("utf-8");
-	    resolver.setMaxInMemorySize(20480);
-	    resolver.setMaxUploadSize(2048000000);
-	    return resolver;
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("utf-8");
+		resolver.setMaxInMemorySize(20480);
+		resolver.setMaxUploadSize(2048000000);
+		return resolver;
 	}
 
 	@Bean
 	@Order(0)
 	public MultipartFilter multipartFilter() {
-	    MultipartFilter multipartFilter = new MultipartFilter();
-	    multipartFilter.setMultipartResolverBeanName("multipartResolver");
-	    return multipartFilter;
+		MultipartFilter multipartFilter = new MultipartFilter();
+		multipartFilter.setMultipartResolverBeanName("multipartResolver");
+		return multipartFilter;
 	}
-//	@Override
-//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//		configurer.enable();
-//	}
+	// @Override
+	// public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	// configurer.enable();
+	// }
 
 }

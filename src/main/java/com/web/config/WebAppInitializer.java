@@ -10,26 +10,27 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class[] {RootAppConfig.class};
+		return new Class[] { RootAppConfig.class };
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		// TODO Auto-generated method stub
-		return new Class[] {WebAppConfig.class,ControllerUtil.class};
+		return new Class[] { WebAppConfig.class, ControllerUtil.class };
 	}
 
 	@Override
 	protected String[] getServletMappings() {
 		// TODO Auto-generated method stub
-		return new String[] {"/"};
+		return new String[] { "/" };
 	}
+
 	@Override
 	protected Filter[] getServletFilters() {
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
-		return new Filter[] {characterEncodingFilter};
+		return new Filter[] { characterEncodingFilter };
 	}
 
 }

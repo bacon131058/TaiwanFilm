@@ -15,9 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-
-
-
 @Configuration
 @EnableTransactionManagement
 public class RootAppConfig {
@@ -37,66 +34,47 @@ public class RootAppConfig {
 		return ds;
 	}
 
-	@Bean
-	public DataSource mySQLDataSource() {
-		 ComboPooledDataSource ds = new ComboPooledDataSource();
-	        ds.setUser("root");
-	        ds.setPassword("P@ssw0rd");
-	        try {
-	            ds.setDriverClass("com.mysql.cj.jdbc.Driver");
-	        } catch (PropertyVetoException e) {
-	            e.printStackTrace();
-	        }
-	        ds.setJdbcUrl("jdbc:mysql://localhost:3306/lab?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei");
-	        ds.setInitialPoolSize(4);
-	        ds.setMaxPoolSize(8);
-	        return ds;
-	}
+	// @Bean
+	// public DataSource mySQLDataSource() {
+	// ComboPooledDataSource ds = new ComboPooledDataSource();
+	// ds.setUser("root");
+	// ds.setPassword("P@ssw0rd");
+	// try {
+	// ds.setDriverClass("com.mysql.cj.jdbc.Driver");
+	// } catch (PropertyVetoException e) {
+	// e.printStackTrace();
+	// }
+	// ds.setJdbcUrl("jdbc:mysql://localhost:3306/lab?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei");
+	// ds.setInitialPoolSize(4);
+	// ds.setMaxPoolSize(8);
+	// return ds;
+	// }
+
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
-		factory.setPackagesToScan(new String[] {
-				"com.web.raisefunding.model",
-				"com.web.login.Model",
-				"com.web.booking.model",
-				"com.web.activity.model",
-				"com.web.message.model",
-				"com.web.store.model",
-				"com.web.shoppingCart.model"
-				
-		});
-
-			factory.setDataSource(msSQLDataSource());
-			factory.setHibernateProperties(additionalPropertiesMsSQL());	
-
+		factory.setPackagesToScan(new String[] { "com.web.raisefunding.model", "com.web.login.Model", "com.web.booking.model", "com.web.activity.model", "com.web.message.model", "com.web.store.model", "com.web.shoppingCart.model" });
+		factory.setDataSource(msSQLDataSource());
+		factory.setHibernateProperties(additionalProperties());
 		return factory;
 	}
-	
-	@Bean(name="transactionManager")
-    @Autowired
-    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
-         HibernateTransactionManager txManager = new HibernateTransactionManager();
-         txManager.setSessionFactory(sessionFactory);
-         return txManager;
-      }	
-	
-	private Properties additionalPropertiesMySQL() {
-		Properties properties=new Properties(); 
-		properties.put("hibernate.dialect", org.hibernate.dialect.MySQL8Dialect.class);
-		properties.put("hibernate.show_sql", Boolean.TRUE);
-		properties.put("hibernate.format_sql", Boolean.TRUE);
-		properties.put("default_batch_fetch_size", 10);
-		properties.put("hibernate.hbm2ddl.auto", "update");
-		return properties;
+
+	@Bean(name = "transactionManager")
+	@Autowired
+	public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
+		HibernateTransactionManager txManager = new HibernateTransactionManager();
+		txManager.setSessionFactory(sessionFactory);
+		return txManager;
 	}
-	
-	private Properties additionalPropertiesMsSQL() {
-		Properties properties=new Properties();
+
+	private Properties additionalProperties() {
+		Properties properties = new Properties();
+		// properties.put("hibernate.dialect", org.hibernate.dialect.MySQL8Dialect.class);
 		properties.put("hibernate.dialect", org.hibernate.dialect.SQLServer2012Dialect.class);
 		properties.put("hibernate.show_sql", Boolean.TRUE);
 		properties.put("hibernate.format_sql", Boolean.TRUE);
 		properties.put("default_batch_fetch_size", 10);
-		properties.put("hibernate.hbm2ddl.auto", "update");
+		properties.put("hibernate.hbm2ddl.auto", "none");
 		return properties;
 	}
 
