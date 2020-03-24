@@ -40,36 +40,36 @@ public class EDMSessionResetHibernate {
 						if (w < 0) {
 							w = 0;
 						}
-						// movieId 6個電影
-						int[] mid = { 1, 2, 3, 4, 5, 6 };
+						// movieId 7個電影
+						int[] mid = { 1, 2, 3, 4, 5, 6, 7 };
 						for (int r = 0; r < 20; r++) {
-							int random1 = (int) (Math.random() * 6);
-							int random2 = (int) (Math.random() * 6);
+							int random1 = (int) (Math.random() * 7);
+							int random2 = (int) (Math.random() * 7);
 							int temp = mid[random1];
 							mid[random1] = mid[random2];
 							mid[random2] = temp;
 						}
 						for (int i2 = 0; i2 < 3; i2++) {
 							int time = 12 * 60 + 40;
-							for (int i = 0; i < 6; i++) {
+							for (int i = 0; i < 7; i++) {
 								sessionBean sb = new sessionBean();
 								sb.setCinemaId(k);
-//								sb.setSessionDate(dateStr);
-								//2月13 demo改成
-								//sb.setSessionDate("2020022" + j);
-								sb.setSessionDate("2020021" + (j + 4));
-//								sb.setSessionDay(weekDays[w]);
-								//2月13 demo改成
-								//if (j + 4 < 7) {
-								//	sb.setSessionDay(weekDays[j + 4]);
-								//} else {
-								//	sb.setSessionDay(weekDays[j - 3]);
-								//}
-								if (j + 5 < 7) {
-									sb.setSessionDay(weekDays[j + 5]);
-								} else {
-									sb.setSessionDay(weekDays[j - 2]);
-								}
+								sb.setSessionDate(dateStr);
+								// 2月13 demo改成
+								// sb.setSessionDate("2020022" + j);
+								// sb.setSessionDate("2020021" + (j + 4));
+								sb.setSessionDay(weekDays[w]);
+								// 2月13 demo改成
+								// if (j + 4 < 7) {
+								// sb.setSessionDay(weekDays[j + 4]);
+								// } else {
+								// sb.setSessionDay(weekDays[j - 3]);
+								// }
+								// if (j + 5 < 7) {
+								// sb.setSessionDay(weekDays[j + 5]);
+								// } else {
+								// sb.setSessionDay(weekDays[j - 2]);
+								// }
 								movieBean mb = session.get(movieBean.class, mid[(i % 2) + (i2 * 2)]);
 								if (Integer.parseInt(mb.getMovieLength().substring(4, 5)) > 3) {
 									time += 100;

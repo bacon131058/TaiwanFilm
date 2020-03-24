@@ -1,13 +1,12 @@
 package com.web.booking.model;
 
-import java.io.Serializable;
 import java.sql.Blob;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,12 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "movies")
-public class movieBean implements Serializable {
+@SequenceGenerator(name = "mid", allocationSize = 1)
+public class movieBean extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "movie_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "mid")
 	private Integer movieId;
 	@Column(name = "movie_name")
 	private String movieName;

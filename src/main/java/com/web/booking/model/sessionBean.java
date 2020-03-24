@@ -1,22 +1,21 @@
 package com.web.booking.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "sessions")
-public class sessionBean implements Serializable {
+@SequenceGenerator(name = "sid", allocationSize = 1)
+public class sessionBean extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "session_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "sid")
 	private Integer sessionId;
 	@Column(name = "cinema_id")
 	private Integer cinemaId;
