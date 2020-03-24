@@ -29,9 +29,9 @@
 		<property name="connection_pool_size">8</property>
 
 		<!-- 3. 宣告程式使用的Mapping檔 ，每個永續類別都需要定義一個Mapping檔 -->
-		<mapping class="com.web.booking.model.movieBean"></mapping>
-		<mapping class="com.web.booking.model.cinemaBean"></mapping>
-		<mapping class="com.web.booking.model.sessionBean"></mapping>
+		<mapping class="com.web.model.booking.movieBean"></mapping>
+		<mapping class="com.web.model.booking.cinemaBean"></mapping>
+		<mapping class="com.web.model.booking.sessionBean"></mapping>
 
 	</session-factory>
 </hibernate-configuration>

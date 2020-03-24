@@ -53,7 +53,7 @@ public class RootAppConfig {
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
-		factory.setPackagesToScan(new String[] { "com.web.raisefunding.model", "com.web.login.Model", "com.web.booking.model", "com.web.activity.model", "com.web.message.model", "com.web.store.model", "com.web.shoppingCart.model" });
+		factory.setPackagesToScan(new String[] { "com.web.model" });
 		factory.setDataSource(msSQLDataSource());
 		factory.setHibernateProperties(additionalProperties());
 		return factory;
