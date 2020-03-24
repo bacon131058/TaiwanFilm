@@ -92,10 +92,12 @@ public class bookingDaoImpl implements bookingDao {
 	@Override
 	public List<ticketBean> getAllTicketsBySessionId(int sessionId) {
 		String hql = "from ticketBean where sessionId = :sid";
-		Session session = null;
+		Session session = factory.getCurrentSession();
+		sessionBean sb = session.get(sessionBean.class, sessionId);
+		session = null;
 		List<ticketBean> list = new ArrayList<>();
 		session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("sid", sessionId).getResultList();
+		list = session.createQuery(hql).setParameter("sid", sb).getResultList();
 		return list;
 	}
 
@@ -126,6 +128,7 @@ public class bookingDaoImpl implements bookingDao {
 	public void addTicket(ticketBean tb) {
 		Session session = factory.getCurrentSession();
 		tb.setStatus("未付款");
+		System.out.println("sessionBean 2: " + tb.getSessionId());
 		session.save(tb);
 	}
 
@@ -141,7 +144,9 @@ public class bookingDaoImpl implements bookingDao {
 				count++;
 			}
 		}
-		sessionBean sb = session.get(sessionBean.class, tb.getSessionId());
+		sessionBean sb = tb.getSessionId();
+		System.out.println(sb);
+		System.out.println(sb.getSessionId());
 		movieBean mb = session.get(movieBean.class, sb.getMovieId());
 		try {
 			mb.setSoldQuantity(mb.getSoldQuantity() + count);

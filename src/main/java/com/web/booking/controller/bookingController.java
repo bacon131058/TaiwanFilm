@@ -236,9 +236,10 @@ public class bookingController {
 		model.addAttribute("ticket", service.getTicketById(id));
 		ticketBean tb = service.getTicketById(id);
 //		model.addAttribute("member", service.getMemberById(tb.getMemberId()));
-		model.addAttribute("session", service.getSessionById(tb.getSessionId()));
-		model.addAttribute("movie", service.getMovieBySessionId(tb.getSessionId()));
-		model.addAttribute("cinema", service.getCinemaBySessionId(tb.getSessionId()));
+		sessionBean sb = tb.getSessionId();
+		model.addAttribute("session", sb);
+		model.addAttribute("movie", service.getMovieById(sb.getMovieId()));
+		model.addAttribute("cinema", service.getCinemaById(sb.getCinemaId()));
 		return "booking/bookSuccess";
 	}
 
@@ -247,24 +248,39 @@ public class bookingController {
 		MembersBean mem = (MembersBean) session.getAttribute("members");
 //		int memberId = 0;
 		List<viewBean> vlist = new ArrayList<>();
-		for (int i = 0; i < service.getMyTickets(mem.getMemberId()).size(); i++) {
+		int tsize = service.getMyTickets(mem.getMemberId()).size();
+		for (int i = 0; i < tsize; i++) {
 			viewBean vb = new viewBean();
-			vb.setMovieName(service.getMovieById(
-					service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getMovieId())
-					.getMovieName());
-			vb.setEnglishName(service.getMovieById(
-					service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getMovieId())
-					.getEnglishName());
-			vb.setSessionDate(service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId())
-					.getSessionDate());
-			vb.setSessionTime(service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId())
-					.getSessionTime());
-			vb.setCinemaName(service.getCinemaById(
-					service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getCinemaId())
-					.getCinemaName());
-			vb.setSeat(service.getMyTickets(mem.getMemberId()).get(i).getSeat());
-			vb.setStatus(service.getMyTickets(mem.getMemberId()).get(i).getStatus());
-			vb.setTicketId(service.getMyTickets(mem.getMemberId()).get(i).getTicketId());
+			ticketBean tb = service.getMyTickets(mem.getMemberId()).get(i);
+			sessionBean sb = tb.getSessionId();
+			cinemaBean cb = service.getCinemaById(sb.getCinemaId());
+			movieBean mb = service.getMovieById(sb.getMovieId());
+
+			vb.setMovieName(mb.getMovieName());
+			vb.setEnglishName(mb.getEnglishName());
+			vb.setSessionDate(sb.getSessionDate());
+			vb.setSessionTime(sb.getSessionTime());
+			vb.setCinemaName(cb.getCinemaName());
+
+			vb.setSeat(tb.getSeat());
+			vb.setStatus(tb.getStatus());
+			vb.setTicketId(tb.getTicketId());
+//			vb.setMovieName(service.getMovieById(
+//					service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getMovieId())
+//					.getMovieName());
+//			vb.setEnglishName(service.getMovieById(
+//					service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getMovieId())
+//					.getEnglishName());
+//			vb.setSessionDate(service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId())
+//					.getSessionDate());
+//			vb.setSessionTime(service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId())
+//					.getSessionTime());
+//			vb.setCinemaName(service.getCinemaById(
+//					service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getCinemaId())
+//					.getCinemaName());
+//			vb.setSeat(service.getMyTickets(mem.getMemberId()).get(i).getSeat());
+//			vb.setStatus(service.getMyTickets(mem.getMemberId()).get(i).getStatus());
+//			vb.setTicketId(service.getMyTickets(mem.getMemberId()).get(i).getTicketId());
 			vlist.add(vb);
 		}
 		model.addAttribute("views", vlist);

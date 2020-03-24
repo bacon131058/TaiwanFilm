@@ -19,23 +19,31 @@ public class movieBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "movie_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer movieId;
+	@Column(name = "movie_name")
 	private String movieName;
+	@Column(name = "english_name")
 	private String englishName;
+	@Column(name = "release_date")
 	private String releaseDate;
 	private String director;
 	private String actor;
 	private String type;
+	@Column(name = "ticket_price")
 	private String ticketPrice;
+	@Column(name = "movie_length")
 	private String movieLength;
 	private String rate;
 	private Blob image;
+	@Column(name = "file_name")
 	private String fileName;
-	@Column(columnDefinition="TEXT")
+	@Column(columnDefinition = "TEXT")
 	private String youtube;
-	@Column(columnDefinition="TEXT")
+	@Column(name = "movie_story", columnDefinition = "TEXT")
 	private String movieStory;
+	@Column(name = "sold_quantity")
 	private Integer soldQuantity;
 	@Transient
 	private MultipartFile fileImage;

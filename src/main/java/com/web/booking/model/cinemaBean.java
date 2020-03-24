@@ -16,16 +16,23 @@ public class cinemaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "cinema_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cinemaId;
+	@Column(name = "cinema_name")
 	private String cinemaName;
+	@Column(name = "cinema_country")
 	private String cinemaCountry;
-	@Column(columnDefinition = "TEXT")
+	@Column(name = "cinema_phone")
 	private String cinemaPhone;
+	@Column(name = "cinema_address")
 	private String cinemaAddress;
+	@Column(name = "cinema_mrt")
 	private String cinemaMrt;
+	@Column(name = "cinema_bus")
 	private String cinemaBus;
 	private Blob image;
+	@Column(name = "file_name")
 	private String fileName;
 
 	public cinemaBean() {

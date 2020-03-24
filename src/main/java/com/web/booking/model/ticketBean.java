@@ -2,10 +2,14 @@ package com.web.booking.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,10 +18,14 @@ public class ticketBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "ticket_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketId;
 	private String seat;
-	private Integer sessionId;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "session_id")
+	private sessionBean sessionId;
+	@Column(name = "member_id")
 	private Integer memberId;
 	private String status;
 
@@ -37,11 +45,11 @@ public class ticketBean implements Serializable {
 		this.seat = seat;
 	}
 
-	public Integer getSessionId() {
+	public sessionBean getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(Integer sessionId) {
+	public void setSessionId(sessionBean sessionId) {
 		this.sessionId = sessionId;
 	}
 

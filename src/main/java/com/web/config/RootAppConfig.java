@@ -25,13 +25,13 @@ public class RootAppConfig {
 	public DataSource msSQLDataSource() {
 		ComboPooledDataSource ds = new ComboPooledDataSource();
 		ds.setUser("sa");
-		ds.setPassword("sa123456");
+		ds.setPassword("1qaz!QAZ");
 		try {
 			ds.setDriverClass("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
-		ds.setJdbcUrl("jdbc:sqlserver://127.0.0.1:1433;DatabaseName=jspdb");
+		ds.setJdbcUrl("jdbc:sqlserver://172.17.24.62:1433;DatabaseName=DC_BACON;");
 		ds.setInitialPoolSize(4);
 		ds.setMaxPoolSize(8);
 		return ds;
