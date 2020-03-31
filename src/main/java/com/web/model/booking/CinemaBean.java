@@ -1,39 +1,46 @@
 package com.web.model.booking;
 
 import java.sql.Blob;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cinemas")
-@SequenceGenerator(name = "cid", allocationSize = 1)
+@Table(name = "CINEMAS")
+@SequenceGenerator(name = "CID", allocationSize = 1)
 public class CinemaBean extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "cinema_id")
-	@GeneratedValue(generator="cid")
+	@Column(name = "CINEMA_ID")
+	@GeneratedValue(generator = "CID")
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer cinemaId;
-	@Column(name = "cinema_name")
+	@Column(name = "CINEMA_NAME")
 	private String cinemaName;
-	@Column(name = "cinema_country")
+	@Column(name = "CINEMA_COUNTRY")
 	private String cinemaCountry;
-	@Column(name = "cinema_phone")
+	@Column(name = "CINEMA_PHONE")
 	private String cinemaPhone;
-	@Column(name = "cinema_address")
+	@Column(name = "CINEMA_ADDRESS")
 	private String cinemaAddress;
-	@Column(name = "cinema_mrt")
+	@Column(name = "CINEMA_MRT")
 	private String cinemaMrt;
-	@Column(name = "cinema_bus")
+	@Column(name = "CINEMA_BUS")
 	private String cinemaBus;
+	@Column(name = "CINEMA_IMAGE")
 	private Blob image;
-	@Column(name = "file_name")
+	@Column(name = "FILE_NAME")
 	private String fileName;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cinemaBean")
+	private List<SessionBean> sessionBeanList;
 
 	public CinemaBean() {
 

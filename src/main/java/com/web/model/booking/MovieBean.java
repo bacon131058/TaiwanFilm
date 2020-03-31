@@ -1,11 +1,17 @@
 package com.web.model.booking;
 
+import java.awt.image.BufferedImage;
 import java.sql.Blob;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -13,38 +19,51 @@ import javax.persistence.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name = "movies")
-@SequenceGenerator(name = "mid", allocationSize = 1)
+@Table(name = "MOVIES")
+@SequenceGenerator(name = "MID", allocationSize = 1)
 public class MovieBean extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "movie_id")
-	@GeneratedValue(generator = "mid")
+	@Column(name = "MOVIE_ID")
+	@GeneratedValue(generator = "MID")
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer movieId;
-	@Column(name = "movie_name")
+	@Column(name = "MOVIE_NAME")
 	private String movieName;
-	@Column(name = "english_name")
+	@Column(name = "ENGLISH_NAME")
 	private String englishName;
-	@Column(name = "release_date")
+	@Column(name = "RELEASE_DATE")
 	private String releaseDate;
+	@Column(name = "MOVIE_DIRECTOR")
 	private String director;
+	@Column(name = "MOVIE_ACTOR")
 	private String actor;
+	@Column(name = "MOVIE_TYPE")
 	private String type;
-	@Column(name = "ticket_price")
+	@Column(name = "TICKET_PRICE")
 	private String ticketPrice;
-	@Column(name = "movie_length")
+	@Column(name = "MOVIE_LENGTH")
 	private String movieLength;
+	@Column(name = "MOVIE_RATE")
 	private String rate;
+	@Column(name = "MOVIE_IMAGE")
 	private Blob image;
-	@Column(name = "file_name")
+	@Column(name = "FILE_NAME")
 	private String fileName;
-	@Column(columnDefinition = "TEXT")
+	@Column(name = "FILE_YOUTUBE", columnDefinition = "TEXT")
 	private String youtube;
-	@Column(name = "movie_story", columnDefinition = "TEXT")
+	@Column(name = "MOVIE_STORY", columnDefinition = "TEXT")
 	private String movieStory;
-	@Column(name = "sold_quantity")
+	@Column(name = "SOLD_QUANTITY")
 	private Integer soldQuantity;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "movieBean")
+	private List<SessionBean> sessionBeanList;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "MOVIE_STATUS")
+	private MovieStatusEnum status;
+	@Transient
+	private BufferedImage imageFile;
 	@Transient
 	private MultipartFile fileImage;
 

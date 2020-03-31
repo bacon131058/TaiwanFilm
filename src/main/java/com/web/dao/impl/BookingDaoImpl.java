@@ -105,7 +105,7 @@ public class BookingDaoImpl implements BookingDao {
 	public MovieBean getMovieBySessionId(int sessionId) {
 		Session session = factory.getCurrentSession();
 		SessionBean sb = session.get(SessionBean.class, sessionId);
-		MovieBean mb = session.get(MovieBean.class, sb.getMovieId());
+		MovieBean mb = sb.getMovieBean();
 		return mb;
 	}
 
@@ -120,7 +120,7 @@ public class BookingDaoImpl implements BookingDao {
 	public CinemaBean getCinemaBySessionId(int sessionId) {
 		Session session = factory.getCurrentSession();
 		SessionBean sb = session.get(SessionBean.class, sessionId);
-		CinemaBean cb = session.get(CinemaBean.class, sb.getCinemaId());
+		CinemaBean cb = sb.getCinemaBean();
 		return cb;
 	}
 
@@ -147,7 +147,7 @@ public class BookingDaoImpl implements BookingDao {
 		SessionBean sb = tb.getSessionId();
 		System.out.println(sb);
 		System.out.println(sb.getSessionId());
-		MovieBean mb = session.get(MovieBean.class, sb.getMovieId());
+		MovieBean mb = sb.getMovieBean();
 		try {
 			mb.setSoldQuantity(mb.getSoldQuantity() + count);
 		} catch (NullPointerException e) {

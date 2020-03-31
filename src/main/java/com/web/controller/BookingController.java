@@ -242,8 +242,8 @@ public class BookingController {
 //		model.addAttribute("member", service.getMemberById(tb.getMemberId()));
 		SessionBean sb = tb.getSessionId();
 		model.addAttribute("session", sb);
-		model.addAttribute("movie", service.getMovieById(sb.getMovieId()));
-		model.addAttribute("cinema", service.getCinemaById(sb.getCinemaId()));
+		model.addAttribute("movie", sb.getMovieBean());
+		model.addAttribute("cinema", sb.getCinemaBean());
 		return "booking/bookSuccess";
 	}
 
@@ -257,8 +257,8 @@ public class BookingController {
 			ViewBean vb = new ViewBean();
 			TicketBean tb = service.getMyTickets(mem.getMemberId()).get(i);
 			SessionBean sb = tb.getSessionId();
-			CinemaBean cb = service.getCinemaById(sb.getCinemaId());
-			MovieBean mb = service.getMovieById(sb.getMovieId());
+			CinemaBean cb = sb.getCinemaBean();
+			MovieBean mb = sb.getMovieBean();
 
 			vb.setMovieName(mb.getMovieName());
 			vb.setEnglishName(mb.getEnglishName());

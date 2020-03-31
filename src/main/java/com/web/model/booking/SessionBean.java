@@ -1,32 +1,38 @@
 package com.web.model.booking;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sessions")
-@SequenceGenerator(name = "sid", allocationSize = 1)
+@Table(name = "SESSIONS")
+@SequenceGenerator(name = "SID", allocationSize = 1)
 public class SessionBean extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "session_id")
-	@GeneratedValue(generator = "sid")
+	@Column(name = "SESSION_ID")
+	@GeneratedValue(generator = "SID")
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer sessionId;
-	@Column(name = "cinema_id")
-	private Integer cinemaId;
-	@Column(name = "session_date")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CINEMA_ID")
+	private CinemaBean cinemaBean;
+	@Column(name = "SESSION_DATE")
 	private String sessionDate;
-	@Column(name = "session_day")
+	@Column(name = "SESSION_DAY")
 	private String sessionDay;
-	@Column(name = "session_time")
+	@Column(name = "SESSION_TIME")
 	private String sessionTime;
-	@Column(name = "movie_id")
-	private Integer movieId;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "MOVIE_ID")
+	private MovieBean movieBean;
 
 	public Integer getSessionId() {
 		return sessionId;
@@ -36,12 +42,12 @@ public class SessionBean extends GenericEntity {
 		this.sessionId = sessionId;
 	}
 
-	public Integer getCinemaId() {
-		return cinemaId;
+	public CinemaBean getCinemaBean() {
+		return cinemaBean;
 	}
 
-	public void setCinemaId(Integer cinemaId) {
-		this.cinemaId = cinemaId;
+	public void setCinemaBean(CinemaBean cinemaBean) {
+		this.cinemaBean = cinemaBean;
 	}
 
 	public String getSessionDate() {
@@ -68,11 +74,11 @@ public class SessionBean extends GenericEntity {
 		this.sessionTime = sessionTime;
 	}
 
-	public Integer getMovieId() {
-		return movieId;
+	public MovieBean getMovieBean() {
+		return movieBean;
 	}
 
-	public void setMovieId(Integer movieId) {
-		this.movieId = movieId;
+	public void setMovieBean(MovieBean movieBean) {
+		this.movieBean = movieBean;
 	}
 }

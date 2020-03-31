@@ -31,6 +31,9 @@ public class EDMTableService {
 		this.factory = factory;
 	}
 
+	@Autowired
+	BookingService bookingService;
+
 	public static final String UTF8_BOM = "\uFEFF"; // 定義 UTF-8的BOM字元
 
 	public void tableResetHibernate() {
@@ -40,9 +43,7 @@ public class EDMTableService {
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("/data/movie.dat").getFile());
 		// 1. 由"data/movie.dat"逐筆讀入movie表格內的初始資料，然後依序新增到movie表格中
-		try (FileInputStream fis = new FileInputStream(file);
-				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-				BufferedReader br = new BufferedReader(isr);) {
+		try (FileInputStream fis = new FileInputStream(file); InputStreamReader isr = new InputStreamReader(fis, "UTF8"); BufferedReader br = new BufferedReader(isr);) {
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
 				// 去除 UTF8_BOM: \uFEFF
@@ -78,9 +79,7 @@ public class EDMTableService {
 
 		// 2. cinema表格
 		file = new File(classLoader.getResource("data/cinema.dat").getFile());
-		try (FileInputStream fis = new FileInputStream(file);
-				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
-				BufferedReader br = new BufferedReader(isr);) {
+		try (FileInputStream fis = new FileInputStream(file); InputStreamReader isr = new InputStreamReader(fis, "UTF8"); BufferedReader br = new BufferedReader(isr);) {
 			count = 0;
 			while ((line = br.readLine()) != null) {
 				System.out.println(line);
@@ -142,7 +141,7 @@ public class EDMTableService {
 						int time = 12 * 60 + 40;
 						for (int i = 0; i < 7; i++) {
 							SessionBean sb = new SessionBean();
-							sb.setCinemaId(k);
+							sb.setCinemaBean(bookingService.getCinemaById(k));
 							sb.setSessionDate(dateStr);
 							sb.setSessionDay(weekDays[w]);
 							MovieBean mb = session.get(MovieBean.class, mid[(i % 2) + (i2 * 2)]);
@@ -151,7 +150,7 @@ public class EDMTableService {
 							} else {
 								time += 120;
 							}
-							sb.setMovieId(mid[(i % 2) + (i2 * 2)]);
+							sb.setMovieBean(bookingService.getMovieById(mid[(i % 2) + (i2 * 2)]));
 							sb.setSessionTime(time % 60 == 0 ? time / 60 + ":00" : time / 60 + ":" + time % 60);
 							session.save(sb);
 							count++;
