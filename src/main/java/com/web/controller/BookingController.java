@@ -39,7 +39,6 @@ import com.web.model.booking.TicketBean;
 import com.web.model.booking.ViewBean;
 import com.web.model.member.MembersBean;
 import com.web.service.BookingService;
-import com.web.service.EDMTableService;
 
 @Controller
 public class BookingController {
@@ -57,9 +56,6 @@ public class BookingController {
 	public void setContext(ServletContext context) {
 		this.context = context;
 	}
-	
-	@Autowired
-	EDMTableService edmTableService;
 
 	@RequestMapping("/alterMovie")
 	public String alterMovie(Model model) {
@@ -295,18 +291,6 @@ public class BookingController {
 	public String deleteTicket(@RequestParam("id") Integer id, Model model) {
 		service.deleteTicket(service.getTicketById(id));
 		return "redirect:/alterTicket";
-	}
-	
-	@RequestMapping("/tableReset")
-	public String tableResetHibernate() {
-		edmTableService.tableResetHibernate();
-		return "redirect:/alterMovie";
-	}
-	
-	@RequestMapping("/sessionReset")
-	public String sessionResetHibernate() {
-		edmTableService.sessionResetHibernate();
-		return "redirect:/alterMovie";
 	}
 
 	@RequestMapping(value = "/getPicture/{bean}/{id}", method = RequestMethod.GET)

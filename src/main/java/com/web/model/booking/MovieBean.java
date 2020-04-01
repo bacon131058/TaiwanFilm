@@ -212,4 +212,30 @@ public class MovieBean extends GenericEntity {
 	public void setSoldQuantity(Integer soldQuantity) {
 		this.soldQuantity = soldQuantity;
 	}
+
+	public List<SessionBean> getSessionBeanList() {
+		return sessionBeanList;
+	}
+
+	public void setSessionBeanList(List<SessionBean> sessionBeanList) {
+		this.sessionBeanList = sessionBeanList;
+	}
+
+	public MovieStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(MovieStatusEnum status) {
+		this.status = status;
+	}
+
+	public BufferedImage getImageFile() {
+		return imageFile;
+	}
+
+	public void setImageFile(BufferedImage imageFile) {
+		this.imageFile = imageFile;
+	}
+
+
 }
