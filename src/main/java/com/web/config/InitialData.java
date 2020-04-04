@@ -8,7 +8,7 @@ import com.web.init.BookingInitDataService;
 import com.web.init.MemberInitDataService;
 
 @Component
-public class InitData implements InitializingBean {
+public class InitialData implements InitializingBean {
 
 	@Autowired
 	BookingInitDataService bookingInitDataService;
