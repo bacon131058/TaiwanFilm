@@ -122,6 +122,7 @@ public class BookingController {
 
 	@RequestMapping("/myTicket")
 	public String getTicketByMemberId(Model model, HttpSession session) {
+		// TODO 運用entity的關聯，移除viewBean的設計
 		MembersBean mem = (MembersBean) session.getAttribute("members");
 		// int memberId = 0;
 		List<ViewBean> vlist = new ArrayList<>();
@@ -173,17 +174,17 @@ public class BookingController {
 	@RequestMapping(value = "/getPicture/{bean}/{id}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable String bean, @PathVariable Integer id) {
 		byte[] media = null;
-		String filename = "";
+		String fileName = "";
 		if (bean.equals("movieBean")) {
 			MovieBean mb = service.getMovieById(id);
 			Blob blob = mb.getImage();
-			filename = mb.getFileName();
+			fileName = mb.getFileName();
 			if (blob != null) {
 				try {
 					int len = (int) blob.length();
 					media = blob.getBytes(1, len);
 				} catch (SQLException e) {
-					throw new RuntimeException("getPicture()發生SQLException: " + e.getMessage());
+					e.printStackTrace();
 				}
 			} else {
 				try {
@@ -192,15 +193,15 @@ public class BookingController {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				filename = "noimage.png";
+				fileName = "noimage.png";
 			}
 		}
 		if (bean.equals("cinemaBean")) {
 			// 讀取內容超過40-60kb的varbinary
 			CinemaBean cb = service.getCinemaById(id);
-			filename = cb.getFileName();
+			fileName = cb.getFileName();
 			try {
-				File file = ResourceUtils.getFile("classpath:data/img/theaters/" + filename);
+				File file = ResourceUtils.getFile("classpath:data/img/theaters/" + fileName);
 				media = Files.readAllBytes(file.toPath());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -208,7 +209,7 @@ public class BookingController {
 		}
 		HttpHeaders headers = new HttpHeaders();
 		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-		String mimeType = context.getMimeType(filename);
+		String mimeType = context.getMimeType(fileName);
 		MediaType mediaType = MediaType.valueOf(mimeType);
 		System.out.println("mediaType =" + mediaType);
 		headers.setContentType(mediaType);
