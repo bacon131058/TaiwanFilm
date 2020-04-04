@@ -36,6 +36,7 @@ import com.web.model.booking.ViewBean;
 import com.web.model.member.MembersBean;
 import com.web.service.BookingService;
 
+// TODO 修改 1.mvc架構 2.service dao的分工(避免過水) 3.javadoc的註解
 @Controller
 public class BookingController {
 
