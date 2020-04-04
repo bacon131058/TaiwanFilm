@@ -43,9 +43,9 @@ body{
 			<h3>訂票成功！</h3>
 
 			<p>
-				請於 <span style="color: red">${session.sessionDate.substring(4, 6) }/
-					${session.sessionDate.substring(6, 8) }&ensp;${session.sessionTime.substring(0, 2) - 1 }:${session.sessionTime.substring(3, 5) }
-					(${session.sessionDay })</span> 前完成付款。
+				請於 <span style="color: red">${ticket.sessionBean.sessionDate.substring(4, 6) }/
+					${ticket.sessionBean.sessionDate.substring(6, 8) }&ensp;${ticket.sessionBean.sessionTime.substring(0, 2) - 1 }:${ticket.sessionBean.sessionTime.substring(3, 5) }
+					(${ticket.sessionBean.sessionDay })</span> 前完成付款。
 			</p>
 		</div>
 
@@ -67,11 +67,11 @@ body{
 					<th width="10%">狀態</th>
 				</tr>
 				<tr>
-					<td>${movie.movieName }<br>${movie.englishName }</td>
-					<td align="center">${session.sessionDate.substring(0, 4) }/
-						${session.sessionDate.substring(4, 6) }/
-						${session.sessionDate.substring(6, 8) }&emsp;${session.sessionTime }</td>
-					<td align="center">${cinema.cinemaName }</td>
+					<td>${ticket.sessionBean.movieBean.movieName }<br>${ticket.sessionBean.movieBean.englishName }</td>
+					<td align="center">${ticket.sessionBean.sessionDate.substring(0, 4) }/
+						${ticket.sessionBean.sessionDate.substring(4, 6) }/
+						${ticket.sessionBean.sessionDate.substring(6, 8) }&emsp;${ticket.sessionBean.sessionTime }</td>
+					<td align="center">${ticket.sessionBean.cinemaBean.cinemaName }</td>
 					<td align="center">${ticket.seat }</td>
 					<td align="center"><span style="color: red">${ticket.status }</span></td>
 				</tr>

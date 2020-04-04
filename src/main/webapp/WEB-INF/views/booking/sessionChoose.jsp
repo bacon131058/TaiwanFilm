@@ -89,7 +89,7 @@ ul li i {
 
 .cinemaCountry img {
 	display: inline-block;
-	-webkit-filter: sepia(1);
+/* 	-webkit-filter: sepia(1); */
 }
 
 .cinemaCountry section {
@@ -159,14 +159,14 @@ ul li i {
 					/ 紅色底時間為完售
 					<c:forEach var='session' items='${sessions }' varStatus='count'>
 						<c:if test="${count.count % 3 == 1 }">
-							<div class="sessionDetail" id="${session.cinemaId }">
+							<div class="sessionDetail" id="${session.cinemaBean.cinemaId }">
 								<p>${session.sessionDate.substring(0, 4) }年
 									${session.sessionDate.substring(4, 6) } 月
 									${session.sessionDate.substring(6, 8) } 日 ${session.sessionDay }</p>
 						</c:if>
 						<input type="button" style="width: 200px; height: 30px;"
 							value="${session.sessionTime }"
-							onclick="javascript:location.href='<spring:url value='/seatChoose?id=${session.sessionId }' />'" />
+							onclick="javascript:location.href='<spring:url value='/seatChoose?sessionid=${session.sessionId }' />'" />
 						<%-- 					<a href="<spring:url value='/seatChoose?id=${session.sessionId }' />">${session.sessionTime }</a> --%>
 						<c:if test="${count.count % 3 == 0 }">
 				</div>

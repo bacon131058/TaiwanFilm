@@ -122,7 +122,7 @@
 						</table>
 						<br> <input type="button" style="width: 200px; height: 30px;"
 							value="前往訂票"
-							onclick="javascript:location.href='<spring:url value='/booking?id=${movie.movieId}' />'" />
+							onclick="javascript:location.href='<spring:url value='/cinema?movieid=${movie.movieId}' />'" />
 					</div>
 				</section>
 			</div>

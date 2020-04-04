@@ -3,33 +3,43 @@ package com.web.model.member;
 import java.io.Serializable;
 import java.sql.Blob;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name="members")
+@Table(name="MEMBERS")
+@SequenceGenerator(name = "UID", allocationSize = 1)
 public class MembersBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "MEMBER_ID")
+	@GeneratedValue(generator = "UID")
 	private Integer memberId;
+	@Column(name = "EMAIL")
 	private String email;
+	@Column(name = "PASSWORD")
 	private String password;
 	@Transient
 	private String password1;
+	@Column(name = "MEMBER_NAME")
 	private String memberName;
+	@Column(name = "GENDER")
 	private String gender;
+	@Column(name = "BIRTHDAY")
 	private String birthDay;
+	@Column(name = "FILE_NAME")
 	private String fileName;	
+	@Column(name = "MEMBER_IMAGE")
 	private Blob memberImage;
-
+	@Column(name = "MEMBER_MODE")
 	private String memberMode;
 	
 	@Transient

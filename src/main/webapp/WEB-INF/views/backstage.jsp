@@ -243,8 +243,8 @@ body {
 		<div class="backStage-title">
 			<div class="back-movie backstage-title">電影</div>
 			<div class="choose-list-movie choose-list">
-				<a href="alterMovie"><div class="m-bar1">1.編輯電影</div></a> <a
-					href="addMovie"><div class="m-bar2">2.新增電影</div></a>
+				<a href="${pageContext.request.contextPath}/backstage/movie"><div class="m-bar1">1.編輯電影</div></a> <a
+					href="${pageContext.request.contextPath}/backstage/addMovie"><div class="m-bar2">2.新增電影</div></a>
 			</div>
 		</div>
 		<div class="backStage-title">

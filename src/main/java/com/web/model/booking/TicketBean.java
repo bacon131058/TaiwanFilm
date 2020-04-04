@@ -1,32 +1,33 @@
 package com.web.model.booking;
 
-import java.io.Serializable;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tickets")
-public class TicketBean implements Serializable {
+@Table(name = "TICKETS")
+@SequenceGenerator(name = "TID", allocationSize = 1)
+public class TicketBean extends GenericEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ticket_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "TICKET_ID")
+	@GeneratedValue(generator = "TID")
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketId;
+	@Column(name = "SEAT")
 	private String seat;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "session_id")
-	private SessionBean sessionId;
-	@Column(name = "member_id")
+	@ManyToOne
+	@JoinColumn(name = "SESSION_ID")
+	private SessionBean sessionBean;
+	@Column(name = "MEMBER_ID")
 	private Integer memberId;
+	@Column(name = "TICKET_STATUS")
 	private String status;
 
 	public Integer getTicketId() {
@@ -45,12 +46,12 @@ public class TicketBean implements Serializable {
 		this.seat = seat;
 	}
 
-	public SessionBean getSessionId() {
-		return sessionId;
+	public SessionBean getSessionBean() {
+		return sessionBean;
 	}
 
-	public void setSessionId(SessionBean sessionId) {
-		this.sessionId = sessionId;
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
 	}
 
 	public Integer getMemberId() {

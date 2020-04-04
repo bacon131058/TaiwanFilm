@@ -49,7 +49,7 @@
 			<a href="${pageContext.request.contextPath}/products" style="text-decoration: none;">
 				<div class="menu-buttonStyle">電影周邊</div>
 			</a>
-			<a href="${pageContext.request.contextPath}/movieIntro" style="text-decoration: none;">
+			<a href="${pageContext.request.contextPath}/movie" style="text-decoration: none;">
 				<div class="menu-buttonStyle">網路訂票</div>
 			</a>
 
@@ -101,7 +101,7 @@
 		position: absolute; right: 5px; top: 68px; z-index: 800">
 		<a href="${pageContext.request.contextPath}/UpdateMember">修改個人資料</a> <br>
 		<a href="${pageContext.request.contextPath}/member/purchase">個人贊助</a> <br>
-		<a href="alterTicket">訂票資料</a> <br>
+		<a href="${pageContext.request.contextPath}/myTicket">訂票資料</a> <br>
 		<a href="${pageContext.request.contextPath}/orderList.do">購物訂單</a><br>
 		<a href="${pageContext.request.contextPath}/logout">登出</a> 
 	</div>

@@ -137,14 +137,14 @@
 						<li>
 							<figure>
 								<a
-									href="<spring:url value='/movieDetail?id=${movie.movieId}' />"><img
+									href="<spring:url value='/movieDetail?movieid=${movie.movieId}' />"><img
 									src="<c:url value='/getPicture/movieBean/${movie.movieId }' />"
 									alt="${movie.movieName }" title="${movie.movieName }"></a>
 							</figure>
 							<section class="infoArea">
 								<h2>
 									<a class="hotA"
-										href="<spring:url value='/movieDetail?id=${movie.movieId}' />">${movie.movieName}</a>
+										href="<spring:url value='/movieDetail?movieid=${movie.movieId}' />">${movie.movieName}</a>
 								</h2>
 								<h3 class="ename">${movie.englishName}</h3>
 								<div class="rankArea">

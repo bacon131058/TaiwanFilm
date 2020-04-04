@@ -17,12 +17,8 @@ import com.web.model.booking.TicketBean;
 @Repository
 public class BookingDaoImpl implements BookingDao {
 
-	SessionFactory factory;
-
 	@Autowired
-	public void setFactory(SessionFactory factory) {
-		this.factory = factory;
-	}
+	SessionFactory factory;
 
 	@Override
 	public void addMovie(MovieBean movie) {
@@ -40,7 +36,7 @@ public class BookingDaoImpl implements BookingDao {
 		list = session.createQuery(hql).getResultList();
 		return list;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getAllMoviesOrder() {
@@ -80,18 +76,19 @@ public class BookingDaoImpl implements BookingDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SessionBean> getAllSessionsByMovieId(int movieId) {
-		String hql = "from SessionBean where movieId = :mid";
+		String hql = "from SessionBean where movieBean = :mid";
 		Session session = null;
 		List<SessionBean> list = new ArrayList<>();
 		session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("mid", movieId).getResultList();
+		MovieBean mb = session.get(MovieBean.class, movieId);
+		list = session.createQuery(hql).setParameter("mid", mb).getResultList();
 		return list;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TicketBean> getAllTicketsBySessionId(int sessionId) {
-		String hql = "from TicketBean where sessionId = :sid";
+		String hql = "from TicketBean where sessionBean = :sid";
 		Session session = factory.getCurrentSession();
 		SessionBean sb = session.get(SessionBean.class, sessionId);
 		session = null;
@@ -128,7 +125,7 @@ public class BookingDaoImpl implements BookingDao {
 	public void addTicket(TicketBean tb) {
 		Session session = factory.getCurrentSession();
 		tb.setStatus("未付款");
-		System.out.println("sessionBean 2: " + tb.getSessionId());
+		// System.out.println("sessionBean 2: " + tb.getSessionBean());
 		session.save(tb);
 	}
 
@@ -144,15 +141,17 @@ public class BookingDaoImpl implements BookingDao {
 				count++;
 			}
 		}
-		SessionBean sb = tb.getSessionId();
-		System.out.println(sb);
-		System.out.println(sb.getSessionId());
+		SessionBean sb = tb.getSessionBean();
+		// System.out.println(sb);
+		// System.out.println(sb.getSessionId());
 		MovieBean mb = sb.getMovieBean();
 		try {
 			mb.setSoldQuantity(mb.getSoldQuantity() + count);
 		} catch (NullPointerException e) {
 			mb.setSoldQuantity(count);
 		}
+		// TODO blob導致串流關閉，先將圖片設為null
+		mb.setImage(null);
 		session.update(mb);
 	}
 
@@ -168,26 +167,26 @@ public class BookingDaoImpl implements BookingDao {
 		Session session = factory.getCurrentSession();
 		session.update(mb);
 	}
-	
+
 	@Override
 	public void deleteMovieDetail(MovieBean mb) {
 		Session session = factory.getCurrentSession();
 		session.delete(mb);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TicketBean> getMyTickets(int memberId) {
 		String hql = "from TicketBean where memberId = :mid";
-//		String hql = "from ticketBean";
+		// String hql = "from ticketBean";
 		Session session = null;
 		List<TicketBean> list = new ArrayList<>();
 		session = factory.getCurrentSession();
 		list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
-//		list = session.createQuery(hql).getResultList();
+		// list = session.createQuery(hql).getResultList();
 		return list;
 	}
-	
+
 	@Override
 	public void deleteTicket(TicketBean tb) {
 		Session session = factory.getCurrentSession();

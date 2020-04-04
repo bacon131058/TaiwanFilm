@@ -1,4 +1,4 @@
-package com.web.service;
+package com.web.init;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,10 +20,11 @@ import com.web.model.booking.CinemaBean;
 import com.web.model.booking.MovieBean;
 import com.web.model.booking.MovieStatusEnum;
 import com.web.model.booking.SessionBean;
+import com.web.service.BookingService;
 
 @Service
 @Transactional
-public class InitDataService {
+public class BookingInitDataService {
 
 	@Autowired
 	SessionFactory factory;
@@ -37,7 +38,7 @@ public class InitDataService {
 		Session session = factory.getCurrentSession();
 		String line = "";
 		ClassLoader classLoader = getClass().getClassLoader();
-		
+
 		// 1. 由"data/movie.dat"逐筆讀入movie表格內的初始資料，然後依序新增到movie表格中
 		int movieCount = 0;
 		File file = new File(classLoader.getResource("/data/movie.dat").getFile());
@@ -121,8 +122,8 @@ public class InitDataService {
 					if (dayOfWeek < 0) {
 						dayOfWeek = 0;
 					}
-					// movieId 7個電影
-					int[] movieArray = { 1, 2, 3, 4, 5, 6, 7 };
+					// movieId 7個電影(後面4位為遞補位數)
+					int[] movieArray = { 1, 2, 3, 4, 5, 6, 7, 0, 0, 0, 0 };
 					for (int randomIndex = 0; randomIndex < 20; randomIndex++) {
 						int random1 = (int) (Math.random() * 7);
 						int random2 = (int) (Math.random() * 7);
@@ -130,23 +131,29 @@ public class InitDataService {
 						movieArray[random1] = movieArray[random2];
 						movieArray[random2] = temp;
 					}
-					// 一天多少部電影
+					// 後面4位放入前4位做遞補
+					movieArray[7] = movieArray[0];
+					movieArray[8] = movieArray[1];
+					movieArray[9] = movieArray[2];
+					movieArray[10] = movieArray[3];
+					// 同時播放多少部電影
 					for (int quantityIndex = 0; quantityIndex < 3; quantityIndex++) {
 						int time = 12 * 60 + 40;
 						for (int movieIndex = 0; movieIndex < 7; movieIndex++) {
 							SessionBean sb = new SessionBean();
-							sb.setCinemaBean(bookingService.getCinemaById(cinemaIndex));
+							CinemaBean cb = session.get(CinemaBean.class, cinemaIndex);
+							sb.setCinemaBean(cb);
 							sb.setSessionDate(dateStr);
 							sb.setSessionDay(weekDays[dayOfWeek]);
-							MovieBean mb = session.get(MovieBean.class, movieArray[(movieIndex % 2) + (quantityIndex * 2)]);
+							MovieBean mb = session.get(MovieBean.class, movieArray[movieIndex + (quantityIndex * 2)]);
+							sb.setMovieBean(mb);
+							sb.setSessionTime(time % 60 == 0 ? time / 60 + ":00" : time / 60 + ":" + time % 60);
+							session.save(sb);
 							if (Integer.parseInt(mb.getMovieLength().substring(4, 5)) > 3) {
 								time += 100;
 							} else {
 								time += 120;
 							}
-							sb.setMovieBean(bookingService.getMovieById(movieArray[(movieIndex % 2) + (quantityIndex * 2)]));
-							sb.setSessionTime(time % 60 == 0 ? time / 60 + ":00" : time / 60 + ":" + time % 60);
-							session.save(sb);
 							sessionCount++;
 						}
 					}

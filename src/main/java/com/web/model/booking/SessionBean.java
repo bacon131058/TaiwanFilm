@@ -1,5 +1,7 @@
 package com.web.model.booking;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,7 +24,7 @@ public class SessionBean extends GenericEntity {
 	@GeneratedValue(generator = "SID")
 	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer sessionId;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "CINEMA_ID")
 	private CinemaBean cinemaBean;
 	@Column(name = "SESSION_DATE")
@@ -30,9 +33,11 @@ public class SessionBean extends GenericEntity {
 	private String sessionDay;
 	@Column(name = "SESSION_TIME")
 	private String sessionTime;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "MOVIE_ID")
 	private MovieBean movieBean;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sessionBean")
+	private List<TicketBean> ticketBeanList;
 
 	public Integer getSessionId() {
 		return sessionId;
