@@ -116,7 +116,7 @@ input {
 			</div>
 		</div>
 	</div> --%>
-			<jsp:include page="../fragment/top.jsp" />
+			<jsp:include page="../fragment/menu.jsp" />
 
 			<div class="activityContent active" id="new">
 				<c:forEach var='activity' items='${activity}'>

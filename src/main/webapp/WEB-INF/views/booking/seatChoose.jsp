@@ -4,30 +4,17 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="zh-TW">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/css/movie.css">
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/favicon.ico" />
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/css/menuStyle.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-
 <head>
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/favicon.ico" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/movie.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/menuStyle.css">
+<link href="${pageContext.request.contextPath }/css/seat.css" rel="stylesheet">
+<!-- <link href="../sweetAlert/sweetalert2.css" rel="stylesheet"> -->
+<!-- <script type="text/javascript" src="../sweetAlert/sweetalert2.js"></script> -->
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico" />
 <title>Taiwam Films - 網路訂票</title>
-<link
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-	rel="stylesheet"
-	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-	crossorigin="anonymous">
-<link href="${pageContext.request.contextPath }/css/seat.css"
-	rel="stylesheet">
-<!-- <link href="../sweetAlert/sweetalert2.css" rel="stylesheet">
-	<script type="text/javascript" src="../sweetAlert/sweetalert2.js"></script> -->
 <style>
 i {
 	margin: 0px 5px 0px 0px;

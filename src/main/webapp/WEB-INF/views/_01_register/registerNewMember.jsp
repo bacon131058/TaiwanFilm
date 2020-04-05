@@ -9,7 +9,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet"	href="${pageContext.request.contextPath}/css/menuStyle.css" />
 <meta charset="UTF-8">
-<title>新增會員</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/img/icon.ico"/>
+<title>Taiwam Films - 註冊會員</title>
 
 <style type="text/css">
    span.error {

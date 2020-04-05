@@ -11,7 +11,7 @@
 <script type='text/javascript'
 	src='${pageContext.request.contextPath}/javascript/jquery-1.9.1.js'></script>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico"/>
-<title>所有會員資料</title>
+<title>Taiwam Films - 後臺管理</title>
 <style>
 .name {
 	padding: 100px 0px 0px 17%;

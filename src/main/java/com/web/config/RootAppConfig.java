@@ -21,20 +21,22 @@ public class RootAppConfig {
 	@Bean
 	public DataSource SQLDataSource() {
 		ComboPooledDataSource ds = new ComboPooledDataSource();
-		// ds.setUser("root");
-		ds.setUser("sa");
+		ds.setUser("root");
+		// ds.setUser("sa");
 		// ds.setPassword("1qaz!QAZ");
-		ds.setPassword("P@ssw0rd");
+		// ds.setPassword("P@ssw0rd");
+		ds.setPassword("sa123456");
 		try {
-			// ds.setDriverClass("com.mysql.cj.jdbc.Driver");
-			ds.setDriverClass("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+			ds.setDriverClass("com.mysql.cj.jdbc.Driver");
+		// ds.setDriverClass("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (PropertyVetoException e) {
 			e.printStackTrace();
 		}
 		// ds.setJdbcUrl("jdbc:sqlserver://172.17.24.62:1433;DatabaseName=DC_BACON;");
-		ds.setJdbcUrl("jdbc:sqlserver://192.168.99.100:32768;DatabaseName=jspdb;");
+		// ds.setJdbcUrl("jdbc:sqlserver://192.168.99.100:32768;DatabaseName=jspdb;");
 		// ds.setJdbcUrl("jdbc:mysql://192.168.99.100:32769/jspdb");
-		// ds.setJdbcUrl("jdbc:mysql://localhost:3306/lab?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei");
+		ds.setJdbcUrl(
+				"jdbc:mysql://localhost:3306/lab?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei");
 		ds.setInitialPoolSize(4);
 		ds.setMaxPoolSize(8);
 		return ds;
@@ -59,8 +61,8 @@ public class RootAppConfig {
 
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
-		// properties.put("hibernate.dialect", org.hibernate.dialect.MySQL8Dialect.class);
-		properties.put("hibernate.dialect", org.hibernate.dialect.SQLServer2012Dialect.class);
+		properties.put("hibernate.dialect", org.hibernate.dialect.MySQL8Dialect.class);
+		// properties.put("hibernate.dialect", org.hibernate.dialect.SQLServer2012Dialect.class);
 		properties.put("hibernate.show_sql", Boolean.TRUE);
 		properties.put("hibernate.format_sql", Boolean.TRUE);
 		properties.put("default_batch_fetch_size", 10);

@@ -11,8 +11,8 @@
 <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <%-- <link rel="stylesheet"	href="${pageContext.request.contextPath}/css/movie.css" /> --%>
 <link rel="stylesheet"	href="${pageContext.request.contextPath}/css/menuStyle.css" />
-
-<title>movie</title>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico" />
+<title>Taiwam Films - 會員登入</title>
 <style>
 body {
 	background-color: white;

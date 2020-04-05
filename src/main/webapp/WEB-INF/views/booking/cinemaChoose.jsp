@@ -4,24 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html lang="zh-TW">
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico"/>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/css/movie.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath }/css/menuStyle.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <head>
-<link rel="icon" type="image/x-icon"
-	href="${pageContext.request.contextPath }/favicon.ico" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/movie.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/menuStyle.css">
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico" />
 <title>Taiwam Films - 戲院選擇</title>
-<link
-	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-	rel="stylesheet"
-	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-	crossorigin="anonymous">
 <style>
 body {
 	background: #f1f1f1;

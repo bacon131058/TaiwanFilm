@@ -204,7 +204,7 @@ body {
 	</div>
 	<div class="backStage-bar" style="height: 870px">
 		<div class="backStage-title">
-			<div class="back-member backstage-title">會員管理</div>
+			<div class="back-member backstage-title">會員</div>
 			<div class="choose-list-member choose-list">
 				<a href="${pageContext.request.contextPath}/ShowAllMembers">
 					<div class="m-bar1">1.查詢全部會員</div>
@@ -219,7 +219,7 @@ body {
 			</div>
 		</div>
 		<div class="backStage-title">
-			<div class="back-activity backstage-title">活動 </div>
+			<div class="back-activity backstage-title">活動</div>
 			<div class="choose-list-activity choose-list">
 				<a href="${pageContext.request.contextPath}/allActivityM">
 					<div class="a-bar1">1.查詢全部活動</div>
@@ -248,7 +248,7 @@ body {
 			</div>
 		</div>
 		<div class="backStage-title">
-			<div class="back-shopping backstage-title">購物</div>
+			<div class="back-shopping backstage-title">商城</div>
 			<div class="choose-list-shopping choose-list">
 				<a href="${pageContext.request.contextPath}/productsM">
 					<div class="a-bar1">1.商品管理</div>
@@ -258,7 +258,7 @@ body {
 			</div>
 		</div>
 		<div class="backStage-title">
-			<div class="back-message backstage-title">留言板</div>
+			<div class="back-message backstage-title">留言版</div>
 			<div class="choose-list-message choose-list">
 				<a href="${pageContext.request.contextPath}/replysB"><div
 						class="i-bar1">1.被檢舉留言</div></a>

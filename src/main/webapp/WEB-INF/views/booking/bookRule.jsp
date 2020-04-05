@@ -2,14 +2,14 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-TW">
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/css/movie.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <head>
-<title>movie</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/movie.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/menuStyle.css">
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico" />
+<title>Taiwam Films - 訂票規定</title>
 <style>
 .ruleInfo {
 	font-family: Microsoft JhengHei;
@@ -28,7 +28,7 @@
 </head>
 <body>
 
-	<jsp:include page="../fragment/top.jsp" />
+	<jsp:include page="../fragment/menu.jsp" />
 
 	<div class="ruleInfo">
 		<h1>一、訂票及取票規定[一般票種]</h1>
