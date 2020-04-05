@@ -136,7 +136,7 @@ body {
 					</tr>
 					<tr>
 						<td><span class="spName">全票</span><br></td>
-						<td>$<span id="fullPrice">290</span></td>
+						<td>$<span id="fullPrice">${session.movieBean.ticketPrice }</span></td>
 						<td><select id="fullQuan">
 								<option selected value="0">0</option>
 								<option value="1">1</option>
@@ -154,7 +154,7 @@ body {
 					</tr>
 					<tr>
 						<td><span class="spName">優待票</span><br></td>
-						<td>$<span id="couponPrice">260</span>
+						<td>$<span id="couponPrice">${session.movieBean.ticketPrice < 30 ? 0 : session.movieBean.ticketPrice - 30 }</span>
 						</td>
 						<td><select id="couponQuan">
 								<option selected value="0">0</option>
@@ -410,7 +410,8 @@ body {
 	var soldstr = "<c:forEach var='ticket' items='${tickets }' varStatus='status'>${ticket.seat }<c:if test='${!status.last }'>,</c:if></c:forEach>";
 	var SoldSeats = soldstr.split(","); //切割字串以逗號隔開
 	for (var i = 0; i < SoldSeats.length; i++) {
-		$("#" + SoldSeats[i]).find("img").attr("src", "/TaiwanFilm/img/sold.png");
+		$("#" + SoldSeats[i]).find("img").attr("src",
+				"/TaiwanFilm/img/sold.png");
 		$("#" + SoldSeats[i]).attr("data-type", "Sold");
 	}
 	$("td[data-type='Sold']").click(function() {
@@ -420,33 +421,37 @@ body {
 	});
 
 	var SelectSeats = [];
-	$("td[data-type='Empty']").click(function() {
-		if (SelectSeats.indexOf($(this).attr("id")) > 0) { //已選
-			return false;
-		}
-		if (SelectSeats.length == (fullQuan + couponQuan)) {
-			$("#" + SelectSeats[0]).find("img").attr("src", "/TaiwanFilm/img/standard_available.png");
-			SelectSeats.splice(0, 1); //刪掉第一個
-		}
-		if (SelectSeats.length > (fullQuan + couponQuan)) { //購買數量小於已選位置數
-			for (var i = 0; i < SelectSeats.length; i++) {
-				$("#" + SelectSeats[i]).find("img").attr("src", "/TaiwanFilm/img/standard_available.png");
-			}
-			SelectSeats = []; //刪掉全部
-			$("#seatLocation").val(SelectSeats);
-			alert("請重新選位!!");
-			// swal("提醒您", "請重新選位!!", "error");
-		} else {
-			if (fullQuan + couponQuan != 0) {
-				SelectSeats.push($(this).attr("id"));
-				$(this).find("img").attr("src", "/TaiwanFilm/img/standard_selected.png");
-				$("#seatLocation").val(SelectSeats);
-				if (SelectSeats.length == (fullQuan + couponQuan)) { //條件達成才可submit
-					$('#submitBtn').attr('disabled', false);
+	$("td[data-type='Empty']").click(
+			function() {
+				if (SelectSeats.indexOf($(this).attr("id")) > 0) { //已選
+					return false;
 				}
-			}
-		}
-	});
+				if (SelectSeats.length == (fullQuan + couponQuan)) {
+					$("#" + SelectSeats[0]).find("img").attr("src",
+							"/TaiwanFilm/img/standard_available.png");
+					SelectSeats.splice(0, 1); //刪掉第一個
+				}
+				if (SelectSeats.length > (fullQuan + couponQuan)) { //購買數量小於已選位置數
+					for (var i = 0; i < SelectSeats.length; i++) {
+						$("#" + SelectSeats[i]).find("img").attr("src",
+								"/TaiwanFilm/img/standard_available.png");
+					}
+					SelectSeats = []; //刪掉全部
+					$("#seatLocation").val(SelectSeats);
+					alert("請重新選位!!");
+					// swal("提醒您", "請重新選位!!", "error");
+				} else {
+					if (fullQuan + couponQuan != 0) {
+						SelectSeats.push($(this).attr("id"));
+						$(this).find("img").attr("src",
+								"/TaiwanFilm/img/standard_selected.png");
+						$("#seatLocation").val(SelectSeats);
+						if (SelectSeats.length == (fullQuan + couponQuan)) { //條件達成才可submit
+							$('#submitBtn').attr('disabled', false);
+						}
+					}
+				}
+			});
 
 	$("#submitBtn").click(function() {
 		if (!confirm("確定要結帳嗎? 結帳後無法變更購買資訊")) {

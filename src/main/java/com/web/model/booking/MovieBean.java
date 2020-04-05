@@ -42,7 +42,7 @@ public class MovieBean extends GenericEntity {
 	@Column(name = "MOVIE_TYPE")
 	private String type;
 	@Column(name = "TICKET_PRICE")
-	private String ticketPrice;
+	private Integer ticketPrice;
 	@Column(name = "MOVIE_LENGTH")
 	private String movieLength;
 	@Column(name = "MOVIE_RATE")
@@ -76,7 +76,7 @@ public class MovieBean extends GenericEntity {
 	}
 
 	public MovieBean(Integer movieId, String movieName, String englishName, String releaseDate, String director,
-			String actor, String type, String ticketPrice, String movieLength, String rate) {
+			String actor, String type, Integer ticketPrice, String movieLength, String rate) {
 		this.movieId = movieId;
 		this.movieName = movieName;
 		this.englishName = englishName;
@@ -149,11 +149,11 @@ public class MovieBean extends GenericEntity {
 		this.type = type;
 	}
 
-	public String getTicketPrice() {
+	public Integer getTicketPrice() {
 		return ticketPrice;
 	}
 
-	public void setTicketPrice(String ticketPrice) {
+	public void setTicketPrice(Integer ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
 

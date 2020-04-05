@@ -42,7 +42,9 @@ public class BookingInitDataService {
 		// 1. 由"data/movie.dat"逐筆讀入movie表格內的初始資料，然後依序新增到movie表格中
 		int movieCount = 0;
 		File file = new File(classLoader.getResource("/data/movie.dat").getFile());
-		try (FileInputStream fis = new FileInputStream(file); InputStreamReader isr = new InputStreamReader(fis, "UTF8"); BufferedReader br = new BufferedReader(isr);) {
+		try (FileInputStream fis = new FileInputStream(file);
+				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+				BufferedReader br = new BufferedReader(isr);) {
 			while ((line = br.readLine()) != null) {
 				// 去除 UTF8_BOM: \uFEFF
 				if (line.startsWith(UTF8_BOM)) {
@@ -56,7 +58,7 @@ public class BookingInitDataService {
 				movie.setDirector(data[3]);
 				movie.setActor(data[4]);
 				movie.setType(data[5]);
-				movie.setTicketPrice(data[6]);
+				movie.setTicketPrice(Integer.parseInt(data[6]));
 				movie.setMovieLength(data[7]);
 				movie.setRate(data[8]);
 				// 讀取圖片檔
@@ -70,6 +72,8 @@ public class BookingInitDataService {
 				session.save(movie);
 				movieCount++;
 			}
+			// 印出資料新增成功的訊息
+			System.out.println("新增   " + movieCount + " 筆   movies 記錄成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -77,7 +81,9 @@ public class BookingInitDataService {
 		// 2. cinema表格
 		int cinemaCount = 0;
 		file = new File(classLoader.getResource("data/cinema.dat").getFile());
-		try (FileInputStream fis = new FileInputStream(file); InputStreamReader isr = new InputStreamReader(fis, "UTF8"); BufferedReader br = new BufferedReader(isr);) {
+		try (FileInputStream fis = new FileInputStream(file);
+				InputStreamReader isr = new InputStreamReader(fis, "UTF8");
+				BufferedReader br = new BufferedReader(isr);) {
 			while ((line = br.readLine()) != null) {
 				// 去除 UTF8_BOM: \uFEFF
 				if (line.startsWith(UTF8_BOM)) {
@@ -160,15 +166,10 @@ public class BookingInitDataService {
 				}
 			}
 			// 印出資料新增成功的訊息
-			System.out.println("新增   " + movieCount + " 筆   movies 記錄成功");
-			System.out.println("新增   " + cinemaCount + " 筆   cinemas 記錄成功");
 			System.out.println("新增   " + sessionCount + " 筆   sessions 記錄成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("新建表格時發生例外: " + e.getMessage());
-
 		}
-
 	}
-
 }

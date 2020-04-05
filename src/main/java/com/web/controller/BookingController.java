@@ -181,6 +181,6 @@ public class BookingController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
 		headers.setContentType(mediaType);
-		return new ResponseEntity<>(media, headers, HttpStatus.OK);
+		return new ResponseEntity<byte[]>(media, headers, HttpStatus.OK);
 	}
 }

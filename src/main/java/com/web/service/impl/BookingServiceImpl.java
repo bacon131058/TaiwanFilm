@@ -91,8 +91,8 @@ public class BookingServiceImpl implements BookingService {
 		} catch (NullPointerException e) {
 			mb.setSoldQuantity(seatCount);
 		}
-		// TODO blob導致串流關閉，先將圖片設為null
-		mb.setImage(null);
+		// TODO 使用docker db時，blob會導致串流關閉，先將圖片設為null
+		// mb.setImage(null);
 		dao.addSoldQuantity(mb);
 	}
 
@@ -125,8 +125,8 @@ public class BookingServiceImpl implements BookingService {
 		int seatCount = getSeatCount(tb.getSeat());
 		MovieBean mb = tb.getSessionBean().getMovieBean();
 		mb.setSoldQuantity(mb.getSoldQuantity() - seatCount);
-		// TODO blob導致串流關閉，先將圖片設為null
-		mb.setImage(null);
+		// TODO 使用docker db時，blob會導致串流關閉，先將圖片設為null
+		// mb.setImage(null);
 		dao.addSoldQuantity(mb);
 
 		dao.deleteTicket(tb);
@@ -199,9 +199,17 @@ public class BookingServiceImpl implements BookingService {
 		mbInit.setReleaseDate(mb.getReleaseDate());
 		mbInit.setDirector(mb.getDirector());
 		mbInit.setActor(mb.getActor());
-		mbInit.setType(mb.getType().replaceAll(",", "、"));
+		try {
+			mbInit.setType(mb.getType().replaceAll(",", "、"));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 		mbInit.setMovieLength(mb.getMovieLength());
-		mbInit.setTicketPrice(mb.getTicketPrice());
+		if (mb.getTicketPrice() != null) {
+			mbInit.setTicketPrice(mb.getTicketPrice());
+		} else {
+			mbInit.setTicketPrice(0);
+		}
 		mbInit.setRate(mb.getRate());
 		mbInit.setYoutube(mb.getYoutube());
 		mbInit.setMovieStory(mb.getMovieStory());
