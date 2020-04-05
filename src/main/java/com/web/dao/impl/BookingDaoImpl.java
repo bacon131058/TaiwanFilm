@@ -1,6 +1,5 @@
 package com.web.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -13,183 +12,114 @@ import com.web.model.booking.CinemaBean;
 import com.web.model.booking.MovieBean;
 import com.web.model.booking.SessionBean;
 import com.web.model.booking.TicketBean;
+import com.web.model.member.MembersBean;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class BookingDaoImpl implements BookingDao {
 
 	@Autowired
 	SessionFactory factory;
 
 	@Override
-	public void addMovie(MovieBean movie) {
-		Session session = factory.getCurrentSession();
-		session.save(movie);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
 	public List<MovieBean> getAllMovies() {
 		String hql = "from MovieBean order by soldQuantity desc";
-		Session session = null;
-		List<MovieBean> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		list = session.createQuery(hql).getResultList();
-		return list;
+		Session session = factory.getCurrentSession();
+		return session.createQuery(hql).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<MovieBean> getAllMoviesOrder() {
 		String hql = "from MovieBean order by releaseDate";
-		Session session = null;
-		List<MovieBean> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		list = session.createQuery(hql).getResultList();
-		return list;
+		Session session = factory.getCurrentSession();
+		return session.createQuery(hql).getResultList();
 	}
 
 	@Override
 	public MovieBean getMovieById(int movieId) {
 		Session session = factory.getCurrentSession();
-		MovieBean mb = session.get(MovieBean.class, movieId);
-		return mb;
+		return session.get(MovieBean.class, movieId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<CinemaBean> getAllCinemas() {
 		String hql = "from CinemaBean";
-		Session session = null;
-		List<CinemaBean> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		list = session.createQuery(hql).getResultList();
-		return list;
+		Session session = factory.getCurrentSession();
+		return session.createQuery(hql).getResultList();
 	}
 
 	@Override
 	public CinemaBean getCinemaById(int cinemaId) {
 		Session session = factory.getCurrentSession();
-		CinemaBean cb = session.get(CinemaBean.class, cinemaId);
-		return cb;
+		return session.get(CinemaBean.class, cinemaId);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<SessionBean> getAllSessionsByMovieId(int movieId) {
-		String hql = "from SessionBean where movieBean = :mid";
-		Session session = null;
-		List<SessionBean> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		MovieBean mb = session.get(MovieBean.class, movieId);
-		list = session.createQuery(hql).setParameter("mid", mb).getResultList();
-		return list;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<TicketBean> getAllTicketsBySessionId(int sessionId) {
-		String hql = "from TicketBean where sessionBean = :sid";
+	public List<SessionBean> getAllSessionsByMovieBean(MovieBean mb) {
+		String hql = "from SessionBean where movieBean = :mb";
 		Session session = factory.getCurrentSession();
-		SessionBean sb = session.get(SessionBean.class, sessionId);
-		session = null;
-		List<TicketBean> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("sid", sb).getResultList();
-		return list;
-	}
-
-	@Override
-	public MovieBean getMovieBySessionId(int sessionId) {
-		Session session = factory.getCurrentSession();
-		SessionBean sb = session.get(SessionBean.class, sessionId);
-		MovieBean mb = sb.getMovieBean();
-		return mb;
+		return session.createQuery(hql).setParameter("mb", mb).getResultList();
 	}
 
 	@Override
 	public SessionBean getSessionById(int sessionId) {
 		Session session = factory.getCurrentSession();
-		SessionBean sb = session.get(SessionBean.class, sessionId);
-		return sb;
+		return session.get(SessionBean.class, sessionId);
 	}
 
 	@Override
-	public CinemaBean getCinemaBySessionId(int sessionId) {
+	public List<TicketBean> getAllTicketsBySessionBean(SessionBean sb) {
+		String hql = "from TicketBean where sessionBean = :sb";
 		Session session = factory.getCurrentSession();
-		SessionBean sb = session.get(SessionBean.class, sessionId);
-		CinemaBean cb = sb.getCinemaBean();
-		return cb;
+		return session.createQuery(hql).setParameter("sb", sb).getResultList();
 	}
 
 	@Override
 	public void addTicket(TicketBean tb) {
 		Session session = factory.getCurrentSession();
-		tb.setStatus("未付款");
-		// System.out.println("sessionBean 2: " + tb.getSessionBean());
 		session.save(tb);
 	}
 
 	@Override
-	public void addSoldQuantity(TicketBean tb) {
+	public void addSoldQuantity(MovieBean mb) {
 		Session session = factory.getCurrentSession();
-		String seat = tb.getSeat();
-		int count = 0;
-		String str = "";
-		for (int i = 0; i < seat.length(); i++) {
-			str = String.valueOf(seat.charAt(i));
-			if (str.equals("-")) {
-				count++;
-			}
-		}
-		SessionBean sb = tb.getSessionBean();
-		// System.out.println(sb);
-		// System.out.println(sb.getSessionId());
-		MovieBean mb = sb.getMovieBean();
-		try {
-			mb.setSoldQuantity(mb.getSoldQuantity() + count);
-		} catch (NullPointerException e) {
-			mb.setSoldQuantity(count);
-		}
-		// TODO blob導致串流關閉，先將圖片設為null
-		mb.setImage(null);
 		session.update(mb);
 	}
 
 	@Override
 	public TicketBean getTicketById(int ticketId) {
 		Session session = factory.getCurrentSession();
-		TicketBean tb = session.get(TicketBean.class, ticketId);
-		return tb;
+		return session.get(TicketBean.class, ticketId);
 	}
 
 	@Override
-	public void alterMovieDetail(MovieBean mb) {
+	public List<TicketBean> getTicketsByMemberBean(MembersBean mem) {
+		String hql = "from TicketBean where memberBean = :mem";
 		Session session = factory.getCurrentSession();
-		session.update(mb);
-	}
-
-	@Override
-	public void deleteMovieDetail(MovieBean mb) {
-		Session session = factory.getCurrentSession();
-		session.delete(mb);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<TicketBean> getMyTickets(int memberId) {
-		String hql = "from TicketBean where memberId = :mid";
-		// String hql = "from ticketBean";
-		Session session = null;
-		List<TicketBean> list = new ArrayList<>();
-		session = factory.getCurrentSession();
-		list = session.createQuery(hql).setParameter("mid", memberId).getResultList();
-		// list = session.createQuery(hql).getResultList();
-		return list;
+		return session.createQuery(hql).setParameter("mem", mem).getResultList();
 	}
 
 	@Override
 	public void deleteTicket(TicketBean tb) {
 		Session session = factory.getCurrentSession();
 		session.delete(tb);
+	}
+
+	@Override
+	public void alterMovie(MovieBean mb) {
+		Session session = factory.getCurrentSession();
+		session.update(mb);
+	}
+
+	@Override
+	public void deleteMovie(MovieBean mb) {
+		Session session = factory.getCurrentSession();
+		session.delete(mb);
+	}
+
+	@Override
+	public void addMovie(MovieBean movie) {
+		Session session = factory.getCurrentSession();
+		session.save(movie);
 	}
 }

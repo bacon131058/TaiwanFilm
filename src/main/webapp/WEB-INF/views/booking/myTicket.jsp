@@ -45,7 +45,7 @@ fieldset {
 			</div>
 
 			<section class="container">
-				<c:forEach var='view' items='${views }'>
+				<c:forEach var='ticket' items='${tickets }'>
 					<fieldset class='form-horizontal'>
 						<div class="form-group">
 							<h4>
@@ -72,20 +72,20 @@ fieldset {
 
 						<div class="form-group">
 							<label class="control-label col-lg-2 col-lg-2">
-								${view.movieName}<br>${view.englishName}
+								${ticket.sessionBean.movieBean.movieName}<br>${ticket.sessionBean.movieBean.englishName}
 							</label> <label class="control-label col-lg-2 col-lg-2"
-								style="width: 17%;"> ${view.sessionDate.substring(0, 4) }/
-								${view.sessionDate.substring(4, 6) }/
-								${view.sessionDate.substring(6, 8) }&emsp;${view.sessionTime } </label>
+								style="width: 17%;"> ${ticket.sessionBean.sessionDate.substring(0, 4) }/
+								${ticket.sessionBean.sessionDate.substring(4, 6) }/
+								${ticket.sessionBean.sessionDate.substring(6, 8) }&emsp;${ticket.sessionBean.sessionTime } </label>
 							<label class="control-label col-lg-2 col-lg-2"
-								style="width: 13%;"> ${view.cinemaName} </label> <label
+								style="width: 13%;"> ${ticket.sessionBean.cinemaBean.cinemaName} </label> <label
 								class="control-label col-lg-2 col-lg-2" style="width: 30%;">
-								${view.seat} </label> <label
+								${ticket.seat} </label> <label
 								class="control-label col-lg-2 col-lg-2 status"
-								style="width: 10%;"> ${view.status} </label>
+								style="width: 10%;"> ${ticket.status} </label>
 							<div align="center" class="deleteBtn">
 								<a
-									href="<spring:url value='/deleteTicket?id=${view.ticketId}' />"
+									href="<spring:url value='/deleteTicket?ticketid=${ticket.ticketId}' />"
 									class="btn btn-primary">取消</a>
 							</div>
 						</div>

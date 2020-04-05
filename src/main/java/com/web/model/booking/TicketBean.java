@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.web.model.member.MembersBean;
+
 @Entity
 @Table(name = "TICKETS")
 @SequenceGenerator(name = "TID", allocationSize = 1)
@@ -25,8 +27,9 @@ public class TicketBean extends GenericEntity {
 	@ManyToOne
 	@JoinColumn(name = "SESSION_ID")
 	private SessionBean sessionBean;
-	@Column(name = "MEMBER_ID")
-	private Integer memberId;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_ID")
+	private MembersBean memberBean;
 	@Column(name = "TICKET_STATUS")
 	private String status;
 
@@ -54,12 +57,12 @@ public class TicketBean extends GenericEntity {
 		this.sessionBean = sessionBean;
 	}
 
-	public Integer getMemberId() {
-		return memberId;
+	public MembersBean getMemberBean() {
+		return memberBean;
 	}
 
-	public void setMemberId(Integer memberId) {
-		this.memberId = memberId;
+	public void setMemberBean(MembersBean memberBean) {
+		this.memberBean = memberBean;
 	}
 
 	public String getStatus() {

@@ -2,46 +2,47 @@ package com.web.service;
 
 import java.util.List;
 
+import org.springframework.http.MediaType;
+
 import com.web.model.booking.CinemaBean;
 import com.web.model.booking.MovieBean;
 import com.web.model.booking.SessionBean;
 import com.web.model.booking.TicketBean;
+import com.web.model.member.MembersBean;
 
 public interface BookingService {
-	
-	void addMovie(MovieBean movie);
-	
+
 	List<MovieBean> getAllMovies();
-	
+
 	List<MovieBean> getAllMoviesOrder();
-	
+
 	MovieBean getMovieById(int movieId);
-	
+
 	List<CinemaBean> getAllCinemas();
-	
+
 	CinemaBean getCinemaById(int cinemaId);
-	
+
 	List<SessionBean> getAllSessionsByMovieId(int movieId);
-	
-	List<TicketBean> getAllTicketsBySessionId(int sessionId);
-	
-	MovieBean getMovieBySessionId(int sessionId);
 
 	SessionBean getSessionById(int sessionId);
-	
-	CinemaBean getCinemaBySessionId(int sessionId);
-	
-	void addTicket(TicketBean tb);
-	
-	void addSoldQuantity(TicketBean tb);
-	
+
+	List<TicketBean> getAllTicketsBySessionBean(SessionBean sb);
+
+	void addTicket(TicketBean tb, MembersBean mem, int sessionId);
+
 	TicketBean getTicketById(int ticketId);
-	
-	void alterMovieDetail(MovieBean mb);
-	
-	void deleteMovieDetail(MovieBean mb);
-	
-	List<TicketBean> getMyTickets(int memberId);
-	
+
+	List<TicketBean> getTicketsByMemberBean(MembersBean mem);
+
 	void deleteTicket(TicketBean tb);
+
+	byte[] getPicture(String bean, int id);
+
+	MediaType getTypeByFileName(String bean, int id);
+
+	void alterMovie(MovieBean mb);
+
+	void deleteMovie(MovieBean mb);
+
+	void addMovie(MovieBean movie);
 }

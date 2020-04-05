@@ -5,7 +5,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="zh-TW">
-<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico"/>
+<link rel="icon" type="image/x-icon"
+	href="${pageContext.request.contextPath }/favicon.ico" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath }/css/movie.css">
 <meta charset="UTF-8">
@@ -17,11 +18,62 @@
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <style>
-label:not (#fake ) {
-	color: #428bca;
-	font-size: 16px;
-}
+label
 
+
+
+
+:not
+
+
+ 
+
+
+(
+#fake
+
+
+ 
+
+
+)
+{
+color
+
+
+
+
+:
+
+
+ 
+
+
+#428bca
+
+
+
+
+;
+font-size
+
+
+
+
+:
+
+
+ 
+
+
+16
+px
+
+
+
+
+;
+}
 input[type="checkbox"] {
 	height: 20px;
 	width: 20px;
@@ -86,6 +138,8 @@ label {
 		<form:form method='POST' modelAttribute="movieBean"
 			class='form-horizontal' enctype="multipart/form-data">
 			<fieldset>
+				<form:input id="movieId" path="movieId" type="hidden"
+					value="${movie.movieId }" />
 				<div class="form-group">
 					<label class="control-label col-lg-2 col-lg-2" for='movieName'>
 						電影名稱 </label>

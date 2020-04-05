@@ -32,7 +32,7 @@ public class RootAppConfig {
 			e.printStackTrace();
 		}
 		// ds.setJdbcUrl("jdbc:sqlserver://172.17.24.62:1433;DatabaseName=DC_BACON;");
-		ds.setJdbcUrl("jdbc:sqlserver://192.168.99.100:32770;DatabaseName=jspdb;");
+		ds.setJdbcUrl("jdbc:sqlserver://192.168.99.100:32768;DatabaseName=jspdb;");
 		// ds.setJdbcUrl("jdbc:mysql://192.168.99.100:32769/jspdb");
 		// ds.setJdbcUrl("jdbc:mysql://localhost:3306/lab?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Taipei");
 		ds.setInitialPoolSize(4);

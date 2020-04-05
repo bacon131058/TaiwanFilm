@@ -6,13 +6,12 @@ import com.web.model.booking.CinemaBean;
 import com.web.model.booking.MovieBean;
 import com.web.model.booking.SessionBean;
 import com.web.model.booking.TicketBean;
+import com.web.model.member.MembersBean;
 
 public interface BookingDao {
 
-	void addMovie(MovieBean movie);
-
 	List<MovieBean> getAllMovies();
-	
+
 	List<MovieBean> getAllMoviesOrder();
 
 	MovieBean getMovieById(int movieId);
@@ -21,27 +20,25 @@ public interface BookingDao {
 
 	CinemaBean getCinemaById(int cinemaId);
 
-	List<SessionBean> getAllSessionsByMovieId(int movieId);
-
-	List<TicketBean> getAllTicketsBySessionId(int sessionId);
-
-	MovieBean getMovieBySessionId(int sessionId);
+	List<SessionBean> getAllSessionsByMovieBean(MovieBean mb);
 
 	SessionBean getSessionById(int sessionId);
 
-	CinemaBean getCinemaBySessionId(int sessionId);
+	List<TicketBean> getAllTicketsBySessionBean(SessionBean sb);
 
 	void addTicket(TicketBean tb);
 
-	void addSoldQuantity(TicketBean tb);
+	void addSoldQuantity(MovieBean mb);
 
 	TicketBean getTicketById(int ticketId);
 
-	void alterMovieDetail(MovieBean mb);
-	
-	void deleteMovieDetail(MovieBean mb);
-	
-	List<TicketBean> getMyTickets(int memberId);
-	
+	List<TicketBean> getTicketsByMemberBean(MembersBean mem);
+
 	void deleteTicket(TicketBean tb);
+
+	void alterMovie(MovieBean mb);
+
+	void deleteMovie(MovieBean mb);
+
+	void addMovie(MovieBean movie);
 }

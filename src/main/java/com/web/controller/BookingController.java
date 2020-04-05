@@ -1,14 +1,5 @@
 package com.web.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,199 +12,175 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.web.model.booking.CinemaBean;
-import com.web.model.booking.MovieBean;
 import com.web.model.booking.SessionBean;
 import com.web.model.booking.TicketBean;
-import com.web.model.booking.ViewBean;
 import com.web.model.member.MembersBean;
 import com.web.service.BookingService;
 
-// TODO 修改 1.mvc架構 2.service dao的分工(避免過水) 3.javadoc的註解
 @Controller
 public class BookingController {
 
 	@Autowired
 	BookingService service;
 
-	@Autowired
-	ServletContext context;
-
+	/**
+	 * 兩種排序方式的所有電影： 1.按票房排序 2.按下映時間排序
+	 * 
+	 * @param model
+	 * @return movie.jsp
+	 */
 	@RequestMapping("/movie")
 	public String getAllMovies(Model model) {
-		List<MovieBean> list = service.getAllMovies();
-		model.addAttribute("movies", list);
-		List<MovieBean> downlist = service.getAllMoviesOrder();
-		model.addAttribute("downmovies", downlist);
+		model.addAttribute("movies", service.getAllMovies());
+		model.addAttribute("downMovies", service.getAllMoviesOrder());
 		return "booking/movie";
 	}
 
-	@RequestMapping("/movieDetail")
+	/**
+	 * 根據電影編號查詢電影資訊
+	 * 
+	 * @param id
+	 *            movie_id
+	 * @param model
+	 * @return movieInfo.jsp
+	 */
+	@RequestMapping("/movieInfo")
 	public String getMovieById(@RequestParam("movieid") Integer id, Model model) {
 		model.addAttribute("movie", service.getMovieById(id));
-		return "booking/movieDetail";
+		return "booking/movieInfo";
 	}
 
+	/**
+	 * 所有戲院 + 該電影對應的所有場次
+	 * 
+	 * @param id
+	 *            movie_id
+	 * @param model
+	 * @param session
+	 * @param request
+	 * @return cinemaChoose.jsp
+	 */
 	@RequestMapping("/cinema")
-	public String getSessionByMovieId(@RequestParam("movieid") Integer id, Model model, HttpSession session, HttpServletRequest request) throws IOException {
+	public String getSessionByMovieId(@RequestParam("movieid") Integer id, Model model, HttpSession session, HttpServletRequest request) {
 		MembersBean mem = (MembersBean) session.getAttribute("members");
 		String requestURI = "movieDetail?movieid=" + id;
+		// 如果使用者沒有登入，請使用者登入
 		if (mem == null) {
-			// 請使用者登入
+			// 記住他現在的頁面，登入後返回
 			session.setAttribute("requestURI", requestURI);
 			return "redirect:/register";
 		}
-		model.addAttribute("movie", service.getMovieById(id));
-		List<SessionBean> slist = service.getAllSessionsByMovieId(id);
-		List<CinemaBean> clist = service.getAllCinemas();
-		model.addAttribute("sessions", slist);
-		model.addAttribute("cinemas", clist);
-		return "booking/sessionChoose";
+		model.addAttribute("cinemas", service.getAllCinemas());
+		model.addAttribute("sessions", service.getAllSessionsByMovieId(id));
+		return "booking/cinemaChoose";
 	}
 
-	@RequestMapping("/bookRule")
-	public String bookRule() {
-		return "booking/bookRule";
-	}
+	// /**
+	// * 要求使用者同意訂票須知
+	// * @return bookRule.jsp
+	// */
+	// @RequestMapping("/bookRule")
+	// public String bookRule() {
+	// return "booking/bookRule";
+	// }
 
+	/**
+	 * 單一查詢場次資訊 + 該場次對應的所有已售出位置
+	 * 
+	 * @param id
+	 *            session_id
+	 * @param model
+	 * @return seatChoose.jsp
+	 */
 	@RequestMapping(value = "/seatChoose", method = RequestMethod.GET)
 	public String getSessionById(@RequestParam("sessionid") Integer id, Model model) {
-		List<TicketBean> tlist = service.getAllTicketsBySessionId(id);
-		model.addAttribute("tickets", tlist);
 		SessionBean sb = service.getSessionById(id);
 		model.addAttribute("session", sb);
-		// model.addAttribute("movie", sb.getMovieBean());
-		// model.addAttribute("cinema", sb.getCinemaBean());
-		TicketBean tb = new TicketBean();
-		model.addAttribute("ticketBean", tb);
+		model.addAttribute("tickets", service.getAllTicketsBySessionBean(sb));
+		model.addAttribute("ticketBean", new TicketBean());
 		return "booking/seatChoose";
 	}
 
+	/**
+	 * 訂票 + 修改電影票房資訊
+	 * 
+	 * @param id
+	 *            session_id
+	 * @param tb
+	 *            ticketBean
+	 * @param session
+	 * @return mapping("/success")
+	 */
 	@RequestMapping(value = "/seatChoose", method = RequestMethod.POST)
 	public String addTicket(@RequestParam(value = "sessionid", required = true) Integer id, @ModelAttribute("ticketBean") TicketBean tb, HttpSession session) {
 		MembersBean mem = (MembersBean) session.getAttribute("members");
-		// System.out.println("--------------------");
-		// System.out.println(mem.getMemberId());
-		tb.setMemberId(mem.getMemberId());
-		tb.setSessionBean(service.getSessionById(id));
-		service.addTicket(tb);
-		service.addSoldQuantity(tb);
+		service.addTicket(tb, mem, id);
 		return "redirect:/success?ticketid=" + tb.getTicketId();
 	}
 
+	/**
+	 * 訂票成功，顯示電影票資訊
+	 * 
+	 * @param id
+	 * @param model
+	 * @return bookSuccess.jsp
+	 */
 	@RequestMapping("/success")
 	public String getTicketById(@RequestParam("ticketid") Integer id, Model model) {
-		TicketBean tb = service.getTicketById(id);
-		model.addAttribute("ticket", tb);
-		// model.addAttribute("member", service.getMemberById(tb.getMemberId()));
-		// SessionBean sb = tb.getSessionBean();
-		// model.addAttribute("session", sb);
-		// model.addAttribute("movie", sb.getMovieBean());
-		// model.addAttribute("cinema", sb.getCinemaBean());
+		model.addAttribute("ticket", service.getTicketById(id));
 		return "booking/bookSuccess";
 	}
 
+	/**
+	 * 查詢訂票紀錄
+	 * 
+	 * @param model
+	 * @param session
+	 * @return myTicket.jsp
+	 */
 	@RequestMapping("/myTicket")
 	public String getTicketByMemberId(Model model, HttpSession session) {
-		// TODO 運用entity的關聯，移除viewBean的設計
 		MembersBean mem = (MembersBean) session.getAttribute("members");
-		// int memberId = 0;
-		List<ViewBean> vlist = new ArrayList<>();
-		int tsize = service.getMyTickets(mem.getMemberId()).size();
-		for (int i = 0; i < tsize; i++) {
-			ViewBean vb = new ViewBean();
-			TicketBean tb = service.getMyTickets(mem.getMemberId()).get(i);
-			SessionBean sb = tb.getSessionBean();
-			CinemaBean cb = sb.getCinemaBean();
-			MovieBean mb = sb.getMovieBean();
-
-			vb.setMovieName(mb.getMovieName());
-			vb.setEnglishName(mb.getEnglishName());
-			vb.setSessionDate(sb.getSessionDate());
-			vb.setSessionTime(sb.getSessionTime());
-			vb.setCinemaName(cb.getCinemaName());
-
-			vb.setSeat(tb.getSeat());
-			vb.setStatus(tb.getStatus());
-			vb.setTicketId(tb.getTicketId());
-			// vb.setMovieName(service.getMovieById(
-			// service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getMovieId())
-			// .getMovieName());
-			// vb.setEnglishName(service.getMovieById(
-			// service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getMovieId())
-			// .getEnglishName());
-			// vb.setSessionDate(service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId())
-			// .getSessionDate());
-			// vb.setSessionTime(service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId())
-			// .getSessionTime());
-			// vb.setCinemaName(service.getCinemaById(
-			// service.getSessionById(service.getMyTickets(mem.getMemberId()).get(i).getSessionId()).getCinemaId())
-			// .getCinemaName());
-			// vb.setSeat(service.getMyTickets(mem.getMemberId()).get(i).getSeat());
-			// vb.setStatus(service.getMyTickets(mem.getMemberId()).get(i).getStatus());
-			// vb.setTicketId(service.getMyTickets(mem.getMemberId()).get(i).getTicketId());
-			vlist.add(vb);
-		}
-		model.addAttribute("views", vlist);
-		return "booking/alterTicket";
+		model.addAttribute("tickets", service.getTicketsByMemberBean(mem));
+		return "booking/myTicket";
 	}
 
+	/**
+	 * 取消已訂購的電影票
+	 * 
+	 * @param id
+	 * @param model
+	 * @return mapping("/myTicket")
+	 */
 	@RequestMapping("/deleteTicket")
-	public String deleteTicket(@RequestParam("id") Integer id, Model model) {
+	public String deleteTicket(@RequestParam("ticketid") Integer id, Model model) {
 		service.deleteTicket(service.getTicketById(id));
 		return "redirect:/myTicket";
 	}
 
+	/**
+	 * 取得圖片
+	 * 
+	 * @param resp
+	 * @param bean
+	 *            1.movieBean 2.cinemaBean
+	 * @param id
+	 *            1.movie_id 2.cinema_id
+	 * @return image
+	 */
 	@RequestMapping(value = "/getPicture/{bean}/{id}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPicture(HttpServletResponse resp, @PathVariable String bean, @PathVariable Integer id) {
-		byte[] media = null;
-		String fileName = "";
-		if (bean.equals("movieBean")) {
-			MovieBean mb = service.getMovieById(id);
-			Blob blob = mb.getImage();
-			fileName = mb.getFileName();
-			if (blob != null) {
-				try {
-					int len = (int) blob.length();
-					media = blob.getBytes(1, len);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			} else {
-				try {
-					File file = ResourceUtils.getFile("classpath:data/img/noimage.png");
-					media = Files.readAllBytes(file.toPath());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				fileName = "noimage.png";
-			}
-		}
-		if (bean.equals("cinemaBean")) {
-			// 讀取內容超過40-60kb的varbinary
-			CinemaBean cb = service.getCinemaById(id);
-			fileName = cb.getFileName();
-			try {
-				File file = ResourceUtils.getFile("classpath:data/img/theaters/" + fileName);
-				media = Files.readAllBytes(file.toPath());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		byte[] media = service.getPicture(bean, id);
+		MediaType mediaType = service.getTypeByFileName(bean, id);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
-		String mimeType = context.getMimeType(fileName);
-		MediaType mediaType = MediaType.valueOf(mimeType);
-		System.out.println("mediaType =" + mediaType);
 		headers.setContentType(mediaType);
-		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
-		return responseEntity;
+		return new ResponseEntity<>(media, headers, HttpStatus.OK);
 	}
 }
