@@ -11,7 +11,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath }/favicon.ico"/>
-<title>movie</title>
+<title>Taiwam Films - 後臺管理</title>
 <style>
 label {
 	color: #428bca;
