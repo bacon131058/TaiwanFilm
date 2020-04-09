@@ -23,6 +23,12 @@ import com.web.model.booking.TicketBean;
 import com.web.model.member.MembersBean;
 import com.web.service.BookingService;
 
+/**
+ * 戲院系統
+ * 
+ * @author Bacon
+ *
+ */
 @Controller
 public class BookingController {
 
