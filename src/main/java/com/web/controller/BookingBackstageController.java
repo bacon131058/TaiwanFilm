@@ -28,6 +28,7 @@ public class BookingBackstageController {
 	 * 按票房排序的所有電影
 	 * 
 	 * @param model
+	 *            model
 	 * @return movieBS.jsp
 	 */
 	@RequestMapping("/movie")
@@ -40,7 +41,9 @@ public class BookingBackstageController {
 	 * 修改電影資訊，根據電影編號查詢電影資訊放入input
 	 * 
 	 * @param id
+	 *            movie_id
 	 * @param model
+	 *            model
 	 * @return alterMovieBS.jsp
 	 */
 	@RequestMapping(value = "/alterMovie", method = RequestMethod.GET)
@@ -54,6 +57,7 @@ public class BookingBackstageController {
 	 * 修改電影資訊
 	 * 
 	 * @param mb
+	 *            movieBean
 	 * @return mapping("/backstage/movie")
 	 */
 	@RequestMapping(value = "/alterMovie", method = RequestMethod.POST)
@@ -66,6 +70,7 @@ public class BookingBackstageController {
 	 * 刪除電影
 	 * 
 	 * @param id
+	 *            movie_id
 	 * @return mapping("/backstage/movie")
 	 */
 	@RequestMapping("/deleteMovie")
@@ -79,6 +84,7 @@ public class BookingBackstageController {
 	 * 新增電影，addMovieBS前端因Demo方便帶入預設值
 	 * 
 	 * @param model
+	 *            model
 	 * @return addMovieBS.jsp
 	 */
 	@RequestMapping(value = "/addMovie", method = RequestMethod.GET)

@@ -39,6 +39,7 @@ public class BookingController {
 	 * 兩種排序方式的所有電影： 1.按票房排序 2.按下映時間排序
 	 * 
 	 * @param model
+	 *            model
 	 * @return movie.jsp
 	 */
 	@RequestMapping("/movie")
@@ -54,6 +55,7 @@ public class BookingController {
 	 * @param id
 	 *            movie_id
 	 * @param model
+	 *            model
 	 * @return movieInfo.jsp
 	 */
 	@RequestMapping("/movieInfo")
@@ -68,8 +70,11 @@ public class BookingController {
 	 * @param id
 	 *            movie_id
 	 * @param model
+	 *            model
 	 * @param session
+	 *            session
 	 * @param request
+	 *            request
 	 * @return cinemaChoose.jsp
 	 */
 	@RequestMapping("/cinema")
@@ -102,6 +107,7 @@ public class BookingController {
 	 * @param id
 	 *            session_id
 	 * @param model
+	 *            model
 	 * @return seatChoose.jsp
 	 */
 	@RequestMapping(value = "/seatChoose", method = RequestMethod.GET)
@@ -121,6 +127,7 @@ public class BookingController {
 	 * @param tb
 	 *            ticketBean
 	 * @param session
+	 *            session
 	 * @return mapping("/success")
 	 */
 	@RequestMapping(value = "/seatChoose", method = RequestMethod.POST)
@@ -134,7 +141,9 @@ public class BookingController {
 	 * 訂票成功，顯示電影票資訊
 	 * 
 	 * @param id
+	 *            ticket_id
 	 * @param model
+	 *            model
 	 * @return bookSuccess.jsp
 	 */
 	@RequestMapping("/success")
@@ -147,7 +156,9 @@ public class BookingController {
 	 * 查詢訂票紀錄
 	 * 
 	 * @param model
+	 *            model
 	 * @param session
+	 *            session
 	 * @return myTicket.jsp
 	 */
 	@RequestMapping("/myTicket")
@@ -161,7 +172,9 @@ public class BookingController {
 	 * 取消已訂購的電影票
 	 * 
 	 * @param id
+	 *            ticket_id
 	 * @param model
+	 *            model
 	 * @return mapping("/myTicket")
 	 */
 	@RequestMapping("/deleteTicket")
@@ -174,6 +187,7 @@ public class BookingController {
 	 * 取得圖片
 	 * 
 	 * @param resp
+	 *            resp
 	 * @param bean
 	 *            1.movieBean 2.cinemaBean
 	 * @param id

@@ -1,7 +1,6 @@
 ﻿package com.web.model.message;
 
 import java.io.Serializable;
-import java.sql.Blob;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
